@@ -9,7 +9,7 @@ workflows:
           name: "package and push Aqua Server chart"
           app_catalog: "giantswarm-incubator-catalog"
           app_catalog_test: "giantswarm-incubator-test-catalog"
-          chart: "server"
+          chart: "aqua-app-server"
           # Trigger job on git tag.
           filters:
             tags:
