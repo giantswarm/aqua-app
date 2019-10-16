@@ -14,3 +14,21 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+      - architect/push-to-app-catalog:
+          name: "package and push Aqua Enforcer chart"
+          app_catalog: "giantswarm-incubator-catalog"
+          app_catalog_test: "giantswarm-incubator-test-catalog"
+          chart: "aqua-app-enforcer"
+          # Trigger job on git tag.
+          filters:
+            tags:
+              only: /^v.*/
+      - architect/push-to-app-catalog:
+          name: "package and push Aqua Scanner chart"
+          app_catalog: "giantswarm-incubator-catalog"
+          app_catalog_test: "giantswarm-incubator-test-catalog"
+          chart: "aqua-app-scanner"
+          # Trigger job on git tag.
+          filters:
+            tags:
+              only: /^v.*/
