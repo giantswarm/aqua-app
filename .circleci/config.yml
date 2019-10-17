@@ -23,7 +23,8 @@ workflows:
           filters:
             tags:
               only: /^v.*/
-          require: "package and push Aqua Server chart"
+          requires:
+            - "package and push Aqua Server chart"
       - architect/push-to-app-catalog:
           name: "package and push Aqua Scanner chart"
           app_catalog: "giantswarm-incubator-catalog"
@@ -33,4 +34,5 @@ workflows:
           filters:
             tags:
               only: /^v.*/
-          require: "package and push Aqua Enforcer chart"
+          requires:
+            - "package and push Aqua Enforcer chart"
