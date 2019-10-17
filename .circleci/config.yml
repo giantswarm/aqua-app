@@ -3,7 +3,7 @@ orbs:
   architect: giantswarm/architect@0.4.3
 
 workflows:
-  package-and-push-chart-on-tag:
+  package-and-push-aqua-app-server-chart-on-tag:
     jobs:
       - architect/push-to-app-catalog:
           name: "package and push Aqua Server chart"
@@ -14,6 +14,8 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+  package-and-push-aqua-app-enforcer-chart-on-tag:
+    jobs:
       - architect/push-to-app-catalog:
           name: "package and push Aqua Enforcer chart"
           app_catalog: "giantswarm-incubator-catalog"
@@ -23,6 +25,8 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+  package-and-push-aqua-app-scanner-chart-on-tag:
+    jobs:
       - architect/push-to-app-catalog:
           name: "package and push Aqua Scanner chart"
           app_catalog: "giantswarm-incubator-catalog"
