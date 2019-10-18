@@ -200,7 +200,7 @@ spec:
       volumes:
       - name: docker-socket-mount
         hostPath:
-          path: {{ .Values.docker.socket.path }}
+          path: /var/run/docker.sock
       - name: aqua-web-pvc
         persistentVolumeClaim:
           claimName: {{ .Release.Name }}-web-pvc
