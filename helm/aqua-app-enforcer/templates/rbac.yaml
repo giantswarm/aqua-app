@@ -7,7 +7,7 @@ metadata:
     name: {{ .Release.Name }}-psp
     labels:
       app: {{ .Release.Name }}
-      chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+      chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" | trunc 63 }}"
       release: "{{ .Release.Name }}"
       heritage: "{{ .Release.Service }}"
 spec:
@@ -32,7 +32,7 @@ metadata:
   name: {{ .Release.Name }}-cluster-role
   labels:
     app: {{ .Release.Name }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" | trunc 63 | trunc  }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
     rbac.example.com/aggregate-to-monitoring: "true"
@@ -57,7 +57,7 @@ metadata:
   namespace: aqua
   labels:
     app: {{ .Release.Name }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" | trunc 63 }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 subjects:
