@@ -21,7 +21,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 */}}
 {{- define "chart-version" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- printf "%s-%s" .Chart.Name Chart.Version | replace "+" "_"| trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" $name .Chart.Version | replace "+" "_"| trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "imagePullSecret" }}
