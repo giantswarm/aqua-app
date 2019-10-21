@@ -1,5 +1,5 @@
 imageCredentials:
-  name: quay-registry 
+  name: giantswarm-partner-aqua-pull-secret
   repositoryUriPrefix: "quay.io" 
 
 enforcerToken: ""
