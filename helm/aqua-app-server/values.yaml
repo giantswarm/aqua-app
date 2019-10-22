@@ -1,6 +1,6 @@
 # Specifies the secret data for imagePullSecrets needed to fetch the private docker images
 imageCredentials:
-  name: quay-registry 
+  name: giantswarm-partner-aqua-pull-secret
   repositoryUriPrefix: "quay.io" 
 
 rbac:
@@ -40,7 +40,7 @@ db:
   ssl: false
   auditssl: false
   image:
-    repository: aqua-database
+    repository: giantswarm/aqua-database
     tag: "4.2"
     pullPolicy: IfNotPresent
   service:
@@ -81,7 +81,7 @@ db:
 
 gate:
   image:
-    repository: aqua-gateway
+    repository: giantswarm/aqua-gateway
     tag: "4.2"
     pullPolicy: IfNotPresent
   service:
@@ -104,7 +104,7 @@ gate:
 
 web:
   image:
-    repository: aqua-console
+    repository: giantswarm/aqua-console
     tag: "4.2"
     pullPolicy: IfNotPresent
   service:
@@ -146,7 +146,7 @@ web:
 scanner:
   enabled: false
   image:
-    repository: aqua-scanner
+    repository: giantswarm/aqua-scanner
     tag: "4.2"
     pullPolicy: IfNotPresent
   user:

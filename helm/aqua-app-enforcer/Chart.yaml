@@ -7,5 +7,4 @@ sources:
 - https://github.com/aquasecurity/aqua-helm
 name: aqua-app-enforcer
 appVersion: "4.2.0"
-# version: "60be1451c79f685eb58f1d7cd35ac4d60e91d70fsdfsdfsdfsddddddddddddddddddddddddddddddddddd"
 version: [[ .Version ]]
