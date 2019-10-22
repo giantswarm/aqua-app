@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}-scanner
   labels:
     app: {{ .Release.Name }}-scanner
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    chart: "{{ include "scanner.chartVersion" . }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
@@ -26,7 +26,7 @@ spec:
       serviceAccount: {{ .Values.serviceAccount }}
       containers:
       - name: scanner
-        image: "{{ .Values.repositoryUriPrefix }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.imageCredentials.repositoryUriPrefix }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
         args:
         - "daemon"
@@ -67,4 +67,4 @@ spec:
       volumes:
       - name: docker-socket-mount
         hostPath:
-          path: {{ .Values.docker.socket.path }}
+          path: "/var/run/docker.sock"

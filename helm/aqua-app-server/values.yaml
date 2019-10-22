@@ -1,11 +1,7 @@
 # Specifies the secret data for imagePullSecrets needed to fetch the private docker images
 imageCredentials:
-  create: true
-  name: csp-registry-secret # example
-  repositoryUriPrefix: "registry.aquasec.com" # for dockerhub - "docker.io"
-  registry: "registry.aquasec.com" #REQUIRED only if create is true, for dockerhub - "index.docker.io/v1/"
-  username: ""
-  password: ""
+  name: giantswarm-partner-aqua-pull-secret
+  repositoryUriPrefix: "quay.io" 
 
 rbac:
   enabled: true
@@ -20,10 +16,6 @@ admin:
   secretname: null
   tokenkey: null
   passwordkey: null
-
-docker:
-  socket:
-    path: /var/run/docker.sock # pks - /var/vcap/data/sys/run/docker/docker.sock
 
 dockerless: false
 
@@ -48,7 +40,7 @@ db:
   ssl: false
   auditssl: false
   image:
-    repository: database
+    repository: giantswarm/aqua-database
     tag: "4.2"
     pullPolicy: IfNotPresent
   service:
@@ -89,7 +81,7 @@ db:
 
 gate:
   image:
-    repository: gateway
+    repository: giantswarm/aqua-gateway
     tag: "4.2"
     pullPolicy: IfNotPresent
   service:
@@ -112,7 +104,7 @@ gate:
 
 web:
   image:
-    repository: console
+    repository: giantswarm/aqua-console
     tag: "4.2"
     pullPolicy: IfNotPresent
   service:
@@ -154,7 +146,7 @@ web:
 scanner:
   enabled: false
   image:
-    repository: scanner
+    repository: giantswarm/aqua-scanner
     tag: "4.2"
     pullPolicy: IfNotPresent
   user:

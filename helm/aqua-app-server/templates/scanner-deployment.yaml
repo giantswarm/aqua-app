@@ -67,5 +67,5 @@ spec:
       volumes:
       - name: docker-socket-mount
         hostPath:
-          path: {{ .Values.docker.socket.path }}
+          path: /var/run/docker.sock
 {{- end }}
