@@ -22,7 +22,7 @@ gate:
   port: 3622
 
 image:
-  repository: aqua-enforcer
+  repository: giantswarm/aqua-enforcer
   tag: "4.2"
   pullPolicy: IfNotPresent
 
