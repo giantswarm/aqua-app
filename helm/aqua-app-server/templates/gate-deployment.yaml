@@ -106,15 +106,17 @@ spec:
           protocol: TCP
         - containerPort: 8443
           protocol: TCP
-{{- with .Values.gate.livenessProbe }}
-        livenessProbe:
-{{ toYaml . | indent 10 }}
-{{- end }}
-{{- with .Values.gate.readinessProbe }}
         readinessProbe:
-{{ toYaml . | indent 10 }}
-{{- end }}
-        resources:
+          tcpSocket:
+            port: 8082
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8082
+          initialDelaySeconds: 15
+          periodSeconds: 20
+            resources:
 {{ toYaml .Values.gate.resources | indent 12 }}
       {{- with .Values.gate.nodeSelector }}
       nodeSelector:
