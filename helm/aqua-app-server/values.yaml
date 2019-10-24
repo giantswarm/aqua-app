@@ -89,6 +89,16 @@ gate:
     externalPort: 3622
   publicIP: aqua-gateway
   replicaCount: 1
+  ingress:
+    enabled: false
+    annotations: 
+      kubernetes.io/ingress.class: nginx
+    hosts: #REQUIRED
+    #- aquasec-test.example.com
+    tls: []
+    #  - secretName: aquasec-tls
+    #    hosts:
+    #      - aquasec.domain.com
   livenessProbe: {}
   readinessProbe: {}
   resources:
@@ -113,8 +123,8 @@ web:
   encryptionKey:
   ingress:
     enabled: false
-    annotations: {}
-    #  kubernetes.io/ingress.class: nginx
+    annotations: 
+      kubernetes.io/ingress.class: nginx
     hosts: #REQUIRED
     #- aquasec-test.example.com
     tls: []

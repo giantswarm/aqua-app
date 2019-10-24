@@ -1,4 +1,4 @@
-{{- if .Values.web.ingress.enabled -}}
+{{- if .Values.gate.ingress.enabled -}}
 {{- $fullname := .Release.Name -}}
 {{- $servicePort := .Values.gate.service.externalPort -}}
 ---
