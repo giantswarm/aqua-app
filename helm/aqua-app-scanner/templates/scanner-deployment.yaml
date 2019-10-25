@@ -23,7 +23,11 @@ spec:
         app: {{ .Release.Name }}-scanner
       name: {{ .Release.Name }}-scanner
     spec:
+    {{- if .Values.serviceAccount }}
       serviceAccount: {{ .Values.serviceAccount }}
+    {{- else }}
+      serviceAccount: {{ .Release.Name }}-sa
+    {{- end }}
       containers:
       - name: scanner
         image: "{{ .Values.imageCredentials.repositoryUriPrefix }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
