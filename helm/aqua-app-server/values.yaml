@@ -87,6 +87,9 @@ gate:
   service:
     type: ClusterIP
     externalPort: 3622
+    loadBalancerSourceRanges: []
+      # - 10.0.0.0/8
+      # - 172.19.0.0/16 
   publicIP: aqua-gateway
   replicaCount: 1
   ingress:
