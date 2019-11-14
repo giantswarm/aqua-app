@@ -7,7 +7,7 @@ metadata:
     name: {{ .Release.Name }}-psp
     labels:
       app: {{ .Release.Name }}
-      chart: "{{ include "chartVersion" . }}"
+      chart: "{{ include "scanner.chartVersion" . }}"
       release: "{{ .Release.Name }}"
       heritage: "{{ .Release.Service }}"
 spec:
@@ -37,7 +37,7 @@ metadata:
   name: {{ .Release.Name }}-cluster-role
   labels:
     app: {{ .Release.Name }}
-    chart: "{{ include "chartVersion" . }}"
+    chart: "{{ include "scanner.chartVersion" . }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 rules:
@@ -55,7 +55,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Release.Name }}
-    chart: "{{ include "chartVersion" . }}"
+    chart: "{{ include "scanner.chartVersion" . }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 subjects:
