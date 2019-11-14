@@ -2,7 +2,10 @@ imageCredentials:
   name: giantswarm-partner-aqua-pull-secret
   repositoryUriPrefix: "quay.io" 
 
-
+rbac:
+  enabled: true
+  roleRef:
+  
 serviceAccount: "server-sa"
 server:
   serviceName: "server-console-svc" # example
