@@ -18,6 +18,9 @@ image:
 
 user:
 password:
+secretName: null
+userKey: null
+passwordKey: null
 replicaCount: 1
 livenessProbe: {}
 readinessProbe: {}

@@ -32,12 +32,32 @@ spec:
       - name: scanner
         image: "{{ .Values.imageCredentials.repositoryUriPrefix }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+        {{- if .Values.secretName }}
+        env:
+        - name: SCANNER_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secretName }}
+              key: {{ .Values.userKey }}
+        - name: SCANNER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secretName }}
+              key: {{ .Values.passwordKey }}
+        {{- end}}
         args:
         - "daemon"
+        {{- if .Values.secretName }}
+        - "--user"
+        - "$(SCANNER_USER)"
+        - "--password"
+        - "$(SCANNER_PASSWORD)"
+        {{- else }}
         - "--user"
         - "{{ required "Please specify a username associated with the Scanner role!" .Values.user }}"
         - "--password"
         - "{{ required "Please specify a password for a user associated with the Scanner role!" .Values.password }}"
+        {{- end }}
         - "--host"
         - "http://{{ .Values.server.serviceName }}:{{ .Values.server.port }}"
         volumeMounts:
