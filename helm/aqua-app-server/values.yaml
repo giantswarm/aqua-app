@@ -41,7 +41,7 @@ db:
   auditssl: false
   image:
     repository: giantswarm/aqua-database
-    tag: "4.2"
+    tag: "4.5"
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -82,7 +82,7 @@ db:
 gate:
   image:
     repository: giantswarm/aqua-gateway
-    tag: "4.2"
+    tag: "4.5"
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -118,7 +118,7 @@ gate:
 web:
   image:
     repository: giantswarm/aqua-console
-    tag: "4.2"
+    tag: "4.5"
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -160,7 +160,7 @@ scanner:
   enabled: false
   image:
     repository: giantswarm/aqua-scanner
-    tag: "4.2"
+    tag: "4.5"
     pullPolicy: IfNotPresent
   user:
   password:
