@@ -23,7 +23,7 @@ gate:
 
 image:
   repository: giantswarm/aqua-enforcer
-  tag: "4.2"
+  tag: "4.5"
   pullPolicy: IfNotPresent
 
 livenessProbe: {}
