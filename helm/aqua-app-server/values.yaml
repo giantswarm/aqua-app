@@ -1,7 +1,7 @@
 # Specifies the secret data for imagePullSecrets needed to fetch the private docker images
 imageCredentials:
   name: giantswarm-partner-aqua-pull-secret
-  repositoryUriPrefix: "quay.io" 
+  repositoryUriPrefix: "quay.io"
 
 rbac:
   enabled: true
@@ -41,7 +41,7 @@ db:
   auditssl: false
   image:
     repository: giantswarm/aqua-database
-    tag: "4.5"
+    tag: 4.5.20069
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -53,18 +53,18 @@ db:
   livenessProbe:
     exec:
       command:
-      - sh
-      - -c
-      - exec pg_isready --host $POD_IP
+        - sh
+        - -c
+        - exec pg_isready --host $POD_IP
     initialDelaySeconds: 60
     timeoutSeconds: 5
     failureThreshold: 6
   readinessProbe:
     exec:
       command:
-      - sh
-      - -c
-      - exec pg_isready --host $POD_IP
+        - sh
+        - -c
+        - exec pg_isready --host $POD_IP
     initialDelaySeconds: 5
     timeoutSeconds: 3
     periodSeconds: 5
@@ -82,19 +82,20 @@ db:
 gate:
   image:
     repository: giantswarm/aqua-gateway
-    tag: "4.5"
+    tag: 4.5.20069
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
     externalPort: 3622
-    loadBalancerSourceRanges: []
+    loadBalancerSourceRanges:
+      []
       # - 10.0.0.0/8
-      # - 172.19.0.0/16 
+      # - 172.19.0.0/16
   publicIP: aqua-gateway
   replicaCount: 1
   ingress:
     enabled: false
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: nginx
     hosts: #REQUIRED
     #- aquasec-test.example.com
@@ -118,7 +119,7 @@ gate:
 web:
   image:
     repository: giantswarm/aqua-console
-    tag: "4.5"
+    tag: 4.5.20069
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -126,7 +127,7 @@ web:
   encryptionKey:
   ingress:
     enabled: false
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: nginx
     hosts: #REQUIRED
     #- aquasec-test.example.com
@@ -160,7 +161,7 @@ scanner:
   enabled: false
   image:
     repository: giantswarm/aqua-scanner
-    tag: "4.5"
+    tag: 4.5.20069
     pullPolicy: IfNotPresent
   user:
   password:

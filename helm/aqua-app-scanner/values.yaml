@@ -1,11 +1,11 @@
 imageCredentials:
   name: giantswarm-partner-aqua-pull-secret
-  repositoryUriPrefix: "quay.io" 
+  repositoryUriPrefix: "quay.io"
 
 rbac:
   enabled: true
   roleRef:
-  
+
 serviceAccount: "server-sa"
 server:
   serviceName: "server-console-svc" # example
@@ -13,7 +13,7 @@ server:
 
 image:
   repository: giantswarm/aqua-scanner
-  tag: "4.5"
+  tag: 4.5.20069
   pullPolicy: IfNotPresent
 
 user:
@@ -24,7 +24,8 @@ passwordKey: null
 replicaCount: 1
 livenessProbe: {}
 readinessProbe: {}
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
