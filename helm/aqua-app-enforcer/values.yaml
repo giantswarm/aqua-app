@@ -1,17 +1,19 @@
 imageCredentials:
   name: giantswarm-partner-aqua-pull-secret
-  repositoryUriPrefix: "quay.io" 
+  repositoryUriPrefix: "quay.io"
 
 enforcerToken: ""
 
 enforcerTokenSecretName: null
 enforcerTokenSecretKey: null
-enforcerLogicalName: 
+enforcerLogicalName:
 
 privileged: true
 
-runcInterception: true 
+runcInterception: true
 sendingHostImagesDisables: false
+
+scanningMemoryLimit: 500
 
 rbac:
   enabled: true
@@ -23,12 +25,13 @@ gate:
 
 image:
   repository: giantswarm/aqua-enforcer
-  tag: "4.5"
+  tag: "4.5.20069"
   pullPolicy: IfNotPresent
 
 livenessProbe: {}
 readinessProbe: {}
-resources: {}
+resources:
+  {}
   # limits:
   #   memory: 128Mi
   # requests:

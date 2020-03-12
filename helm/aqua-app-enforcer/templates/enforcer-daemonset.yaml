@@ -84,6 +84,8 @@ spec:
           value: "{{ .Values.runcInterception }}"
         - name: SENDING_HOST_IMAGES_DISABLED
           value: "{{ .Values.sendingHostImagesDisables }}"
+        - name: AQUA_ENFORCER_SCANNING_MEMORY_LIMIT
+          value: "{{ .Values.scanningMemoryLimit }}"
         volumeMounts:
         - mountPath: /var/run
           name: var-run
