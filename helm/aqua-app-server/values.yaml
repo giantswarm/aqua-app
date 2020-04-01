@@ -97,8 +97,8 @@ gate:
     enabled: false
     annotations:
       kubernetes.io/ingress.class: nginx
-    hosts: #REQUIRED
-    #- aquasec-test.example.com
+    hosts:  # REQUIRED
+    # - aquasec-test.example.com
     tls: []
     #  - secretName: aquasec-tls
     #    hosts:
@@ -129,8 +129,8 @@ web:
     enabled: false
     annotations:
       kubernetes.io/ingress.class: nginx
-    hosts: #REQUIRED
-    #- aquasec-test.example.com
+    hosts:  # REQUIRED
+    # - aquasec-test.example.com
     tls: []
     #  - secretName: aquasec-tls
     #    hosts:
