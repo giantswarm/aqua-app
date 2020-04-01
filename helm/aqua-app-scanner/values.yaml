@@ -8,7 +8,7 @@ rbac:
 
 serviceAccount: "server-sa"
 server:
-  serviceName: "server-console-svc" # example
+  serviceName: "server-console-svc"  # example
   port: 8080
 
 image:
