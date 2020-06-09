@@ -15,5 +15,5 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Updated image versions from `4.5.20069` to `4.6.20156`.
 
-[Unreleased]: https://github.com/giantswarm/nginx-ingress-controller-app/compare/v4.6.0...master
-[v4.6.0]: https://github.com/giantswarm/nginx-ingress-controller-app/releases/tag/v4.6.0
+[Unreleased]: https://github.com/giantswarm/aqua-app/compare/v4.6.0...master
+[v4.6.0]: https://github.com/giantswarm/aqua-app/releases/tag/v4.6.0
