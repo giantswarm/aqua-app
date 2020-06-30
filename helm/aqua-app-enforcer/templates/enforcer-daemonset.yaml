@@ -74,8 +74,12 @@ spec:
         - name: AQUA_LOGICAL_NAME
           value: {{ .Release.Name }}-helm
           {{- end }}
+        - name: AQUA_MEMORY_PRESSURE
+          value: {{ .Values.memoryPressure | default "critical" }}
         - name: AQUA_NETWORK_CONTROL
           value: "1"
+        - name: AQUA_NETWORK_FAIL_MODE
+          value: {{ .Values.networkFailMode | default "open" }}
         - name: RESTART_CONTAINERS
           value: "no"
         - name: AQUA_HOST_RUN_PATH
