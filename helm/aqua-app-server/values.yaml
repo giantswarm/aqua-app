@@ -118,6 +118,7 @@ gate:
   affinity: {}
 
 web:
+  integrityCheck:
   image:
     repository: giantswarm/aqua-console
     tag: 4.6.20156
