@@ -80,6 +80,7 @@ db:
   affinity: {}
 
 gate:
+  integrityCheck:
   image:
     repository: giantswarm/aqua-gateway
     tag: 4.6.20156
