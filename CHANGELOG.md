@@ -9,6 +9,11 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Changed
 
+- Gateway: allow configuration of asset integrity checking (default to `true`).
+- Console: allow configuration of workload integrity checking (default to `true`).
+- Enforcer: allow configuration of memory pressure behaviour (default to `critical`).
+- Enforcer: allow configuration of network failure behaviour (default to `open`).
+
 ## [v4.6.0] 2020-06-09
 
 ### Changed

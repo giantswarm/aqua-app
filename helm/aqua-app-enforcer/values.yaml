@@ -8,6 +8,9 @@ enforcerTokenSecretName: null
 enforcerTokenSecretKey: null
 enforcerLogicalName:
 
+memoryPressure:
+networkFailMode:
+
 privileged: true
 
 runcInterception: true
