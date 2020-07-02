@@ -32,7 +32,7 @@ spec:
         - name: AQUA_CONSOLE_SECURE_ADDRESS
           value: "{{ .Release.Name }}-console-svc:443"
         - name: AQUA_WORKLOADS_INTEGRITY_CHECK
-          value: {{ .Values.gate.integrityCheck | default "true" }}
+          value: {{ .Values.gate.integrityCheck | default "true" | quote }}
         - name: SCALOCK_GATEWAY_PUBLIC_IP
           value: {{ .Values.gate.publicIP | default "aqua-gateway-svc" }}
         - name: HEALTH_MONITOR
