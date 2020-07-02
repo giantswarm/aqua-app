@@ -34,7 +34,7 @@ spec:
         imagePullPolicy: "{{ .Values.web.image.pullPolicy }}"
         env:
         - name: AQUA_ASSET_INTEGRITY_CHECK
-          value: {{ .Values.web.integrityCheck | default "true" }}
+          value: {{ .Values.web.integrityCheck | default "true" | quote }}
         - name: SCALOCK_DBUSER
           value: {{ .Values.db.external.enabled | ternary .Values.db.external.user "postgres" }}
           {{- if .Values.db.passwordSecret }}
