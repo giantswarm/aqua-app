@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [4.6.3] - 2020-09-02
+
 ### Changed
 
 - Upgrade to 4.6.20236 
@@ -40,7 +42,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Updated image versions from `4.5.20069` to `4.6.20156`.
 
-[Unreleased]: https://github.com/giantswarm/aqua-app/compare/v4.6.2...HEAD
+[Unreleased]: https://github.com/giantswarm/aqua-app/compare/v4.6.3...HEAD
+[4.6.3]: https://github.com/giantswarm/aqua-app/compare/v4.6.2...v4.6.3
 [4.6.2]: https://github.com/giantswarm/aqua-app/compare/v4.6.1...v4.6.2
 [4.6.1]: https://github.com/giantswarm/aqua-app/compare/v4.6.0...v4.6.1
 [4.6.0]: https://github.com/giantswarm/aqua-app/releases/tag/v4.6.0
