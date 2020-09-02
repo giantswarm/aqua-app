@@ -40,7 +40,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Updated image versions from `4.5.20069` to `4.6.20156`.
 
-[unreleased]: https://github.com/giantswarm/aqua-app/compare/v4.6.2...master
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v0.9.1...HEAD
 [v4.6.2]: https://github.com/giantswarm/aqua-app/compare/v4.6.1...v4.6.2
 [v4.6.1]: https://github.com/giantswarm/aqua-app/compare/v4.6.0...v4.6.1
 [v4.6.0]: https://github.com/giantswarm/aqua-app/releases/tag/v4.6.0
