@@ -19,13 +19,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - **Console**: Adjusted default memory request/limit to **10GB** & and remove cpu request/limit
 - **Database**: Adjusted default memory request/limit to **15GB** & and remove cpu request/limit
 
-## [v4.6.2] 2020-07-02
+## [4.6.2] 2020-07-02
 
 ### Changed
 
 - Gateway/Console: ensure boolean env vars are quoted.
 
-## [v4.6.1] 2020-07-01
+## [4.6.1] 2020-07-01
 
 ### Changed
 
@@ -34,13 +34,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Enforcer: allow configuration of memory pressure behaviour (default to `critical`).
 - Enforcer: allow configuration of network failure behaviour (default to `open`).
 
-## [v4.6.0] 2020-06-09
+## [4.6.0] 2020-06-09
 
 ### Changed
 
 - Updated image versions from `4.5.20069` to `4.6.20156`.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v0.9.1...HEAD
-[v4.6.2]: https://github.com/giantswarm/aqua-app/compare/v4.6.1...v4.6.2
-[v4.6.1]: https://github.com/giantswarm/aqua-app/compare/v4.6.0...v4.6.1
-[v4.6.0]: https://github.com/giantswarm/aqua-app/releases/tag/v4.6.0
+[Unreleased]: https://github.com/giantswarm/aqua-app/compare/v4.6.2...HEAD
+[4.6.2]: https://github.com/giantswarm/aqua-app/compare/v4.6.1...v4.6.2
+[4.6.1]: https://github.com/giantswarm/aqua-app/compare/v4.6.0...v4.6.1
+[4.6.0]: https://github.com/giantswarm/aqua-app/releases/tag/v4.6.0
