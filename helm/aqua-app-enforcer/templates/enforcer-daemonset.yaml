@@ -76,8 +76,6 @@ spec:
           {{- end }}
         - name: AQUA_MEMORY_PRESSURE
           value: {{ .Values.memoryPressure | default "critical" }}
-        - name: AQUA_NETWORK_CONTROL
-          value: "1"
         - name: AQUA_NETWORK_FAIL_MODE
           value: {{ .Values.networkFailMode | default "open" }}
         - name: RESTART_CONTAINERS
@@ -90,6 +88,9 @@ spec:
           value: "{{ .Values.sendingHostImagesDisables }}"
         - name: AQUA_ENFORCER_SCANNING_MEMORY_LIMIT
           value: "{{ .Values.scanningMemoryLimit }}"
+        - name: AQUA_GRPC_KEEP_ALIVE_INTERVAL
+          value: "{{ .Values.grpcKeepAliveInterval }}"
+          
         volumeMounts:
         - mountPath: /var/run
           name: var-run

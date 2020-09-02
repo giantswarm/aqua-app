@@ -33,6 +33,10 @@ spec:
           value: "{{ .Release.Name }}-console-svc:443"
         - name: AQUA_WORKLOADS_INTEGRITY_CHECK
           value: {{ .Values.gate.integrityCheck | default "true" | quote }}
+        - name: AQUA_WORLOADS_PING_CHECK
+          value: {{ .Values.gate.pingCheck | default "true" | quote }}
+        - name: AQUA_DISCONNECTION_GRACE_PERIOD
+          value: {{ .Values.gate.disconnectionGracePeriod | default "true" | quote }}
         - name: SCALOCK_GATEWAY_PUBLIC_IP
           value: {{ .Values.gate.publicIP | default "aqua-gateway-svc" }}
         - name: HEALTH_MONITOR
