@@ -9,7 +9,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Changed
 
-- Upgrade to 4.6.20236
+- Upgrade to 4.6.20236 
 - **Enforcer**: Remove **AQUA_NETWORK_CONTROL** environment variable
 - **Enforcer**: Add **AQUA_GRPC_KEEP_ALIVE_INTERVAL** environment variable default configuration
 - **Enforcer**: Configure default memory limit 10 **1500MiB**
