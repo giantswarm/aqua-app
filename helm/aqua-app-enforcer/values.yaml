@@ -16,7 +16,9 @@ privileged: true
 runcInterception: true
 sendingHostImagesDisables: false
 
-scanningMemoryLimit: 500
+scanningMemoryLimit: 300
+
+grpcKeepAliveInterval: 30
 
 rbac:
   enabled: true
@@ -28,17 +30,15 @@ gate:
 
 image:
   repository: giantswarm/aqua-enforcer
-  tag: 4.6.20156
+  tag: 4.6.20236
   pullPolicy: IfNotPresent
 
 livenessProbe: {}
 readinessProbe: {}
 resources:
-  {}
-  # limits:
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  limits:
+    memory: 1500Mi
+  requests:
+    memory: 1500Mi
 nodeSelector: {}
 tolerations: []

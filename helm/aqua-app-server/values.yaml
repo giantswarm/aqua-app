@@ -41,7 +41,7 @@ db:
   auditssl: false
   image:
     repository: giantswarm/aqua-database
-    tag: 4.6.20156
+    tag: 4.6.20236
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -70,20 +70,20 @@ db:
     periodSeconds: 5
   resources:
     requests:
-      cpu: 0.1
-      memory: 0.2Gi
+      memory: 15Gi
     limits:
-      cpu: 1
-      memory: 1Gi
+      memory: 15Gi
   nodeSelector: {}
   tolerations: []
   affinity: {}
 
 gate:
   integrityCheck:
+  pingCheck:
+  disconnectionGracePeriod:
   image:
     repository: giantswarm/aqua-gateway
-    tag: 4.6.20156
+    tag: 4.6.20236
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -108,11 +108,9 @@ gate:
   readinessProbe: {}
   resources:
     requests:
-      cpu: 0.1
-      memory: 0.2Gi
+      memory: 10Gi
     limits:
-      cpu: 1
-      memory: 2Gi
+      memory: 10Gi
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -121,7 +119,7 @@ web:
   integrityCheck:
   image:
     repository: giantswarm/aqua-console
-    tag: 4.6.20156
+    tag: 4.6.20236
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -146,11 +144,9 @@ web:
     accessMode: ReadWriteOnce
   resources:
     requests:
-      cpu: 0.1
-      memory: 0.2Gi
+      memory: 10Gi
     limits:
-      cpu: 1
-      memory: 2Gi
+      memory: 10Gi
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -163,7 +159,7 @@ scanner:
   enabled: false
   image:
     repository: giantswarm/aqua-scanner
-    tag: 4.6.20156
+    tag: 4.6.20236
     pullPolicy: IfNotPresent
   user:
   password:
