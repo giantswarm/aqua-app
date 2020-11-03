@@ -7,6 +7,9 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+- Added values.schema.json to validate default values
+
 ## [4.6.3] - 2020-09-02
 
 ### Changed
