@@ -1,0 +1,92 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "affinity": {
+            "type": "object"
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "pullPolicy": {
+                    "type": "string"
+                },
+                "repository": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                }
+            }
+        },
+        "imageCredentials": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "repositoryUriPrefix": {
+                    "type": "string"
+                }
+            }
+        },
+        "livenessProbe": {
+            "type": "object"
+        },
+        "nodeSelector": {
+            "type": "object"
+        },
+        "password": {
+            "type": "null"
+        },
+        "passwordKey": {
+            "type": ["null", "string"]
+        },
+        "rbac": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "roleRef": {
+                    "type": "null"
+                }
+            }
+        },
+        "readinessProbe": {
+            "type": "object"
+        },
+        "replicaCount": {
+            "type": "integer"
+        },
+        "resources": {
+            "type": "object"
+        },
+        "secretName": {
+            "type": ["null", "string"]
+        },
+        "server": {
+            "type": "object",
+            "properties": {
+                "port": {
+                    "type": "integer"
+                },
+                "serviceName": {
+                    "type": "string"
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "string"
+        },
+        "tolerations": {
+            "type": "array"
+        },
+        "user": {
+            "type": "null"
+        },
+        "userKey": {
+            "type": ["null", "string"]
+        }
+    }
+}
