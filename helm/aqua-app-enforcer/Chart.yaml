@@ -2,7 +2,7 @@ apiVersion: v1
 description: A Helm chart for the Aqua Enforcer Components
 engine: gotpl
 home: https://www.aquasec.com/
-icon: https://www.aquasec.com/wp-content/uploads/2016/05/aqua_logo_fullcolor.png
+icon: https://s.giantswarm.io/app-icons/1/png/aqua-app-light.png
 sources:
 - https://github.com/aquasecurity/aqua-helm
 name: aqua-app-enforcer
