@@ -37,7 +37,7 @@
             "type": "object"
         },
         "password": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "passwordKey": {
             "type": ["null", "string"]
@@ -83,7 +83,7 @@
             "type": "array"
         },
         "user": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "userKey": {
             "type": ["null", "string"]
