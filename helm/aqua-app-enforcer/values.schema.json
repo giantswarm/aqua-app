@@ -1,0 +1,119 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "enforcerLogicalName": {
+            "type": "null"
+        },
+        "enforcerToken": {
+            "type": "string"
+        },
+        "enforcerTokenSecretKey": {
+            "type": "null"
+        },
+        "enforcerTokenSecretName": {
+            "type": "null"
+        },
+        "gate": {
+            "type": "object",
+            "properties": {
+                "host": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                }
+            }
+        },
+        "grpcKeepAliveInterval": {
+            "type": "integer"
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "pullPolicy": {
+                    "type": "string"
+                },
+                "repository": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                }
+            }
+        },
+        "imageCredentials": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "repositoryUriPrefix": {
+                    "type": "string"
+                }
+            }
+        },
+        "livenessProbe": {
+            "type": "object"
+        },
+        "memoryPressure": {
+            "type": "null"
+        },
+        "networkFailMode": {
+            "type": "null"
+        },
+        "nodeSelector": {
+            "type": "object"
+        },
+        "privileged": {
+            "type": "boolean"
+        },
+        "rbac": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "roleRef": {
+                    "type": "null"
+                }
+            }
+        },
+        "readinessProbe": {
+            "type": "object"
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "memory": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "memory": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "runcInterception": {
+            "type": "boolean"
+        },
+        "scanningMemoryLimit": {
+            "type": "integer"
+        },
+        "sendingHostImagesDisables": {
+            "type": "boolean"
+        },
+        "tolerations": {
+            "type": "array"
+        }
+    }
+}
