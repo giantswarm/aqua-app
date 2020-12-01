@@ -7,7 +7,7 @@ sources:
 - https://github.com/aquasecurity/aqua-helm
 annotations:
     application.giantswarm.io/values-schema: https://raw.githubusercontent.com/giantswarm/aqua-app/v[[ .Version ]]/helm/aqua-app-scanner/values.schema.json
-    application.giantswarm.io/readme: https://raw.githubusercontent.com/giantswarm/aqua-app/v[[ .Version ]]/README.md
+    application.giantswarm.io/readme: https://raw.githubusercontent.com/giantswarm/aqua-app/v[[ .Version ]]/helm/aqua-app-scanner/README.md
 name: aqua-app-scanner
 appVersion: "4.6.0"
 version: [[ .Version ]]
