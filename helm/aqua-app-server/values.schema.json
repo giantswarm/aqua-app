@@ -3,7 +3,7 @@
     "type": "object",
     "properties": {
         "activeactive": {
-            "type": "boolean"
+            "type": ["null", "boolean"]
         },
         "admin": {
             "type": "object",
@@ -26,7 +26,7 @@
             }
         },
         "clustermode": {
-            "type": "boolean"
+            "type": ["null", "boolean"]
         },
         "db": {
             "type": "object",
