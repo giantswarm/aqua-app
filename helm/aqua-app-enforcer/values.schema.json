@@ -14,6 +14,23 @@
         "enforcerTokenSecretName": {
             "type": "null"
         },
+        "envoy": {
+            "type": "object",
+            "properties": {
+                "configMap": {
+                    "type": "null"
+                },
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "extraEnvironmentVars": {
+            "type": "object"
+        },
+        "extraSecretEnvironmentVars": {
+            "type": "array"
+        },
         "gate": {
             "type": "object",
             "properties": {
@@ -25,8 +42,8 @@
                 }
             }
         },
-        "grpcKeepAliveInterval": {
-            "type": "integer"
+        "hostRunPath": {
+            "type": "null"
         },
         "image": {
             "type": "object",
@@ -45,10 +62,22 @@
         "imageCredentials": {
             "type": "object",
             "properties": {
+                "create": {
+                    "type": "boolean"
+                },
                 "name": {
                     "type": "string"
                 },
+                "password": {
+                    "type": "string"
+                },
+                "registry": {
+                    "type": "string"
+                },
                 "repositoryUriPrefix": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }
@@ -56,17 +85,11 @@
         "livenessProbe": {
             "type": "object"
         },
-        "memoryPressure": {
-            "type": "null"
-        },
-        "networkFailMode": {
+        "logLevel": {
             "type": "null"
         },
         "nodeSelector": {
             "type": "object"
-        },
-        "privileged": {
-            "type": "boolean"
         },
         "rbac": {
             "type": "object",
@@ -83,34 +106,15 @@
             "type": "object"
         },
         "resources": {
+            "type": "object"
+        },
+        "securityContext": {
             "type": "object",
             "properties": {
-                "limits": {
-                    "type": "object",
-                    "properties": {
-                        "memory": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "requests": {
-                    "type": "object",
-                    "properties": {
-                        "memory": {
-                            "type": "string"
-                        }
-                    }
+                "privileged": {
+                    "type": "boolean"
                 }
             }
-        },
-        "runcInterception": {
-            "type": "boolean"
-        },
-        "scanningMemoryLimit": {
-            "type": "integer"
-        },
-        "sendingHostImagesDisables": {
-            "type": "boolean"
         },
         "tolerations": {
             "type": "array"

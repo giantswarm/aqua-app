@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}-ds
   labels:
     app: {{ .Release.Name }}-ds
-    chart: "{{ include "chartVersion" . }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
@@ -15,6 +15,9 @@ spec:
   template:
     metadata:
       annotations:
+      {{- if not .Values.securityContext.privileged }}
+        container.apparmor.security.beta.kubernetes.io/enforcer: unconfined
+      {{- end }}
       {{- if and (.Values.tolerations) (semverCompare "<1.6-0" .Capabilities.KubeVersion.GitVersion) }}
         scheduler.alpha.kubernetes.io/tolerations: '{{ toJson .Values.tolerations }}'
       {{- end }}
@@ -28,28 +31,11 @@ spec:
       - name: enforcer
         image: "{{ .Values.imageCredentials.repositoryUriPrefix }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
-        {{- if .Values.privileged }}
         securityContext:
-          privileged: true
-        {{- else }}
-        securityContext:
-          privileged: false
-          capabilities:
-            add:
-              - SYS_ADMIN
-              - NET_ADMIN
-              - NET_RAW
-              - SYS_PTRACE
-              - KILL
-              - MKNOD
-              - SETGID
-              - SETUID
-              - SYS_MODULE
-              - AUDIT_CONTROL
-              - SYSLOG
-              - SYS_CHROOT
-        {{- end }}
+          {{- toYaml .Values.securityContext | nindent 12 }}
         env:
+        - name: SCALOCK_LOG_LEVEL
+          value: {{ .Values.logLevel | default "INFO" }}
         {{- if .Values.enforcerTokenSecretName }}
         - name: AQUA_TOKEN
           valueFrom:
@@ -64,7 +50,7 @@ spec:
               key: token
         {{- end }}
         - name: AQUA_SERVER
-          value: {{ .Values.gate.host | default "csp-gateway-svc" }}:{{ .Values.gate.port | default "3622" }}
+          value: {{ .Values.gate.host | default "aqua-gateway-svc" }}:{{ .Values.gate.port | default "8443" }}
         - name: AQUA_INSTALL_PATH
           value: /var/lib/aquasec
           {{- if .Values.enforcerLogicalName }}
@@ -74,24 +60,20 @@ spec:
         - name: AQUA_LOGICAL_NAME
           value: {{ .Release.Name }}-helm
           {{- end }}
-        - name: AQUA_MEMORY_PRESSURE
-          value: {{ .Values.memoryPressure | default "critical" }}
-        - name: AQUA_NETWORK_FAIL_MODE
-          value: {{ .Values.networkFailMode | default "open" }}
-        - name: RESTART_CONTAINERS
-          value: "no"
+          {{- if .Values.hostRunPath }}
         - name: AQUA_HOST_RUN_PATH
-          value: "/var/run"
-        - name: AQUA_RUNC_INTERCEPTION
-          value: "{{ .Values.runcInterception }}"
-        - name: SENDING_HOST_IMAGES_DISABLED
-          value: "{{ .Values.sendingHostImagesDisables }}"
-        - name: AQUA_ENFORCER_SCANNING_MEMORY_LIMIT
-          value: "{{ .Values.scanningMemoryLimit }}"
-        - name: AQUA_GRPC_KEEP_ALIVE_INTERVAL
-          value: "{{ .Values.grpcKeepAliveInterval }}"
-          
+          value: {{ .Values.hostRunPath }}
+          {{- end }}
+        {{- include "enforcer.extraEnvironmentVars" .Values | nindent 8 }}
+        {{- include "enforcer.extraSecretEnvironmentVars" .Values | nindent 8 }}
         volumeMounts:
+        {{ if .Values.envoy.enabled }}
+        {{ if .Values.envoy.configMap }}
+        - name: ca-certs
+          mountPath: /etc/ssl/custom-certificates/
+          readOnly: true
+        {{- end }}
+        {{- end }}
         - mountPath: /var/run
           name: var-run
         - mountPath: /dev
@@ -112,6 +94,8 @@ spec:
           name: aquasec-tmp
         - mountPath: /opt/aquasec/audit
           name: aquasec-audit
+        - mountPath: /data
+          name: aquasec-data
 {{- with .Values.livenessProbe }}
         livenessProbe:
 {{ toYaml . | indent 10 }}
@@ -123,9 +107,15 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
+      {{- if .Values.hostRunPath }}
       - name: var-run
         hostPath:
-          path: "/var/run"
+          path: {{ .Values.hostRunPath }}
+      {{- else }}
+      - name: var-run
+        hostPath:
+          path: /var/run
+      {{- end }}
       - name: dev
         hostPath:
           path: /dev
@@ -147,6 +137,16 @@ spec:
       - name: aquasec-audit
         hostPath:
           path: /var/lib/aquasec/audit
+      - name: aquasec-data
+        hostPath:
+          path: /var/lib/aquasec/data
+      {{ if .Values.envoy.enabled }}
+      {{ if .Values.envoy.configMap }}
+      - name: ca-certs
+        configMap:
+          name: {{ .Values.envoy.configMap }}
+      {{- end }}
+      {{- end }}
       {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
