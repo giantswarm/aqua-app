@@ -1,4 +1,4 @@
-  repositoryUriPrefix: "quay.io"
+repositoryUriPrefix: "quay.io"
 
 imageCredentials:
   name: giantswarm-partner-aqua-pull-secret
