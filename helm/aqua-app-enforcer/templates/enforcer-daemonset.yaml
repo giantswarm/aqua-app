@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}-ds
   labels:
     app: {{ .Release.Name }}-ds
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    chart: "{{ include "scanner.chartVersion" . }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
