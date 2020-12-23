@@ -8,16 +8,23 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
+{{- if .Values.web.service.annotations }}
+  annotations:
+{{ toYaml .Values.web.service.annotations | indent 4 }}
+{{- end }}
 spec:
   type: {{ .Values.web.service.type }}
   selector:
     app: {{ .Release.Name }}-console
   ports:
-  - port: {{ .Values.web.service.externalPort }}
-    targetPort: 8080
-    protocol: TCP
-    name: {{ .Release.Name }}-console
-  - port: 443
-    protocol: TCP
-    targetPort: 8443
-    name: aqua-web-ssl
+  {{- range $port := .Values.web.service.ports }}
+    - name: {{ $port.name }}
+      port: {{ $port.port }}
+      targetPort: {{ $port.targetPort }}
+      {{- if $port.nodePort }}
+      nodePort: {{ $port.nodePort }}
+      {{- end }}
+      {{- if $port.protocol }}
+      protocol: {{ $port.protocol }}
+      {{- end }}
+  {{- end }}

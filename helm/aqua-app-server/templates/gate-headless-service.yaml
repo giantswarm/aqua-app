@@ -1,24 +1,17 @@
+{{- if .Values.envoy.enabled }}
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-gateway-svc
+  name: {{ .Release.Name }}-gateway-headless-svc
   labels:
     app: {{ .Release.Name }}-gateway
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-{{- if .Values.gate.service.annotations }}
-  annotations:
-{{ toYaml .Values.gate.service.annotations | indent 4 }}
-{{- end }}
 spec:
-  type: {{ .Values.gate.service.type }}
-  {{- if eq .Values.gate.service.type "LoadBalancer" }}
-  loadBalancerSourceRanges:
-{{ toYaml .Values.gate.service.loadBalancerSourceRanges | indent 4 }}
-  {{- end }}
+  clusterIP: None
+  type: ClusterIP
   selector:
     app: {{ .Release.Name }}-gateway
   ports:
@@ -33,3 +26,5 @@ spec:
       protocol: {{ $port.protocol }}
       {{- end }}
   {{- end }}
+
+{{- end }}
