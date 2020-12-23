@@ -241,7 +241,7 @@
                     "type": "object"
                 },
                 "certsSecretName": {
-                    "type": ["null", "string]
+                    "type": ["null", "string"]
                 },
                 "enabled": {
                     "type": "boolean"
@@ -445,13 +445,13 @@
                     "type": "object"
                 },
                 "logLevel": {
-                    "type": ["null", "string]
+                    "type": ["null", "string"]
                 },
                 "nodeSelector": {
                     "type": "object"
                 },
                 "publicIP": {
-                    "type": ["null", "string]
+                    "type": ["null", "string"]
                 },
                 "readinessProbe": {
                     "type": "object"
@@ -480,7 +480,7 @@
                                         "type": "string"
                                     },
                                     "nodePort": {
-                                        "type": ["null", "integer]
+                                        "type": ["null", "integer"]
                                     },
                                     "port": {
                                         "type": "integer"
@@ -537,7 +537,7 @@
                     "type": "boolean"
                 },
                 "roleRef": {
-                    "type": ["null", "string]
+                    "type": ["null", "string"]
                 }
             }
         },
@@ -577,7 +577,7 @@
                             "type": "boolean"
                         },
                         "hosts": {
-                            "type": ["null", "string]
+                            "type": ["null", "string"]
                         },
                         "tls": {
                             "type": "array"
@@ -588,7 +588,7 @@
                     "type": "object"
                 },
                 "logLevel": {
-                    "type": ["null", "string]
+                    "type": ["null", "string"]
                 },
                 "nodeSelector": {
                     "type": "object"
