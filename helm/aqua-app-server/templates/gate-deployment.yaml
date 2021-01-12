@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,17 +25,15 @@ spec:
       serviceAccount: {{ .Release.Name }}-sa
       containers:
       - name: gate
+        securityContext:
+          {{- toYaml .Values.gate.securityContext | nindent 12 }}
         image: "{{ .Values.imageCredentials.repositoryUriPrefix }}/{{ .Values.gate.image.repository }}:{{ .Values.gate.image.tag }}"
         imagePullPolicy: "{{ .Values.gate.image.pullPolicy }}"
         env:
+        - name: SCALOCK_LOG_LEVEL
+          value: {{ .Values.gate.logLevel | default "INFO" }}
         - name: AQUA_CONSOLE_SECURE_ADDRESS
           value: "{{ .Release.Name }}-console-svc:443"
-        - name: AQUA_WORKLOADS_INTEGRITY_CHECK
-          value: {{ .Values.gate.integrityCheck | default "true" | quote }}
-        - name: AQUA_WORLOADS_PING_CHECK
-          value: {{ .Values.gate.pingCheck | default "true" | quote }}
-        - name: AQUA_DISCONNECTION_GRACE_PERIOD
-          value: {{ .Values.gate.disconnectionGracePeriod | default "true" | quote }}
         - name: SCALOCK_GATEWAY_PUBLIC_IP
           value: {{ .Values.gate.publicIP | default "aqua-gateway-svc" }}
         - name: HEALTH_MONITOR
@@ -75,19 +72,15 @@ spec:
               name: {{ .Values.db.dbAuditPasswordName }}
               key: {{ .Values.db.dbAuditPasswordKey }}
           {{- else }}
-          {{- if .Values.db.external.enabled }}
-        - name: SCALOCK_AUDIT_DBPASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Release.Name }}-database-audit-password
-              key: db-audit-password
-          {{- else }}
         - name: SCALOCK_AUDIT_DBPASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ .Release.Name }}-database-password
-              key: db-password 
-          {{- end }}
+              {{- if .Values.db.external.auditPassword }}
+              key: audit-password
+              {{- else }}
+              key: db-password
+              {{- end }}
           {{- end }}
         - name: SCALOCK_AUDIT_DBNAME
           value: {{ .Values.db.external.enabled | ternary .Values.db.external.auditName "slk_audit" }}
@@ -95,10 +88,41 @@ spec:
           {{- if .Values.db.external.enabled }}
           value: {{ .Values.db.external.auditHost }}
           {{- else }}
-          value: {{ .Release.Name }}-database-svc
+          value: {{ .Release.Name }}-audit-database-svc
           {{- end }}
         - name: SCALOCK_AUDIT_DBPORT
           value: {{ .Values.db.external.enabled | ternary .Values.db.external.auditPort "5432" | quote }}
+        {{- if .Values.activeactive }}
+        - name: AQUA_PUBSUB_DBUSER
+          value: {{ .Values.db.external.enabled | ternary .Values.db.external.pubsubUser "postgres" }}
+          {{- if .Values.db.passwordSecret }}
+        - name: AQUA_PUBSUB_DBPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.db.dbPubsubPasswordName }}
+              key: {{ .Values.db.dbPubsubPasswordKey }}
+          {{- else }}
+        - name: AQUA_PUBSUB_DBPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-database-password
+              {{- if .Values.db.external.pubsubPassword }}
+              key: pubsub-password
+              {{- else }}
+              key: db-password
+              {{- end }}
+          {{- end }}
+        - name: AQUA_PUBSUB_DBNAME
+          value: {{ .Values.db.external.enabled | ternary .Values.db.external.pubsubName "aqua_pubsub" }}
+        - name: AQUA_PUBSUB_DBHOST
+          {{- if .Values.db.external.enabled }}
+          value: {{ .Values.db.external.pubsubHost }}
+          {{- else }}
+          value: {{ .Release.Name }}-database-svc
+          {{- end }}
+        - name: AQUA_PUBSUB_DBPORT
+          value: {{ .Values.db.external.enabled | ternary .Values.db.external.pubsubPort "5432" | quote }}
+          {{- end }}
           {{- if .Values.db.ssl }}
         - name: SCALOCK_DBSSL
           value: require
@@ -107,6 +131,8 @@ spec:
         - name: SCALOCK_AUDIT_DBSSL
           value: require
           {{- end }}
+        {{- include "server.extraEnvironmentVars" .Values.gate | nindent 8 }}
+        {{- include "server.extraSecretEnvironmentVars" .Values.gate | nindent 8 }}
         ports:
         - containerPort: 3622
           protocol: TCP

@@ -3,16 +3,33 @@
     "type": "object",
     "properties": {
         "enforcerLogicalName": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "enforcerToken": {
             "type": "string"
         },
         "enforcerTokenSecretKey": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "enforcerTokenSecretName": {
-            "type": "null"
+            "type": ["null", "string"]
+        },
+        "envoy": {
+            "type": "object",
+            "properties": {
+                "configMap": {
+                    "type": ["null", "string"]
+                },
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "extraEnvironmentVars": {
+            "type": "object"
+        },
+        "extraSecretEnvironmentVars": {
+            "type": "array"
         },
         "gate": {
             "type": "object",
@@ -25,8 +42,8 @@
                 }
             }
         },
-        "grpcKeepAliveInterval": {
-            "type": "integer"
+        "hostRunPath": {
+            "type": ["null", "string"]
         },
         "image": {
             "type": "object",
@@ -45,10 +62,22 @@
         "imageCredentials": {
             "type": "object",
             "properties": {
+                "create": {
+                    "type": "boolean"
+                },
                 "name": {
+                    "type": ["null", "string"]
+                },
+                "password": {
                     "type": "string"
                 },
+                "registry": {
+                    "type": ["null", "string"]
+                },
                 "repositoryUriPrefix": {
+                    "type": ["null", "string"]
+                },
+                "username": {
                     "type": "string"
                 }
             }
@@ -56,17 +85,11 @@
         "livenessProbe": {
             "type": "object"
         },
-        "memoryPressure": {
-            "type": "null"
-        },
-        "networkFailMode": {
-            "type": "null"
+        "logLevel": {
+            "type": ["null", "string"]
         },
         "nodeSelector": {
             "type": "object"
-        },
-        "privileged": {
-            "type": "boolean"
         },
         "rbac": {
             "type": "object",
@@ -75,7 +98,7 @@
                     "type": "boolean"
                 },
                 "roleRef": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 }
             }
         },
@@ -83,34 +106,15 @@
             "type": "object"
         },
         "resources": {
+            "type": "object"
+        },
+        "securityContext": {
             "type": "object",
             "properties": {
-                "limits": {
-                    "type": "object",
-                    "properties": {
-                        "memory": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "requests": {
-                    "type": "object",
-                    "properties": {
-                        "memory": {
-                            "type": "string"
-                        }
-                    }
+                "privileged": {
+                    "type": "boolean"
                 }
             }
-        },
-        "runcInterception": {
-            "type": "boolean"
-        },
-        "scanningMemoryLimit": {
-            "type": "integer"
-        },
-        "sendingHostImagesDisables": {
-            "type": "boolean"
         },
         "tolerations": {
             "type": "array"

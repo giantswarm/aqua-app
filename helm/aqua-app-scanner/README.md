@@ -8,23 +8,41 @@ These are Helm charts for installation and maintenance of Aqua Container Securit
 
 - [Aqua Security Scanner Helm Chart](#aqua-security-scanner-helm-chart)
   - [Contents](#contents)
+  - [Prerequisites](#prerequisites)
+    - [Container Registry Credentials](#container-registry-credentials)
   - [Installing the Chart](#installing-the-chart)
   - [Configurable Variables](#configurable-variables)
     - [Scanner](#scanner)
-  - [Support](#support)
-  
-## Installing the Chart
+  - [Issues and feedback](#issues-and-feedback)
 
-Clone the GitHub repository with the chart
+## Prerequisites
+
+### Container Registry Credentials
+
+[Link](../docs/imagepullsecret.md)
+
+## Installing the Chart
+Follow the steps in this section for production grade deployments. You can either clone aqua-helm git repo or you can add our helm private repository ([https://helm.aquasec.com](https://helm.aquasec.com))
+
+* Clone the GitHub repository with the charts
 
 ```bash
 git clone https://github.com/aquasecurity/aqua-helm.git
 cd aqua-helm/
 ```
 
+* Add Aqua Helm Repository
 ```bash
-helm upgrade --install --namespace aqua scanner ./scanner --set imageCredentials.username=<>,imageCredentials.password=<>
+$ helm repo add aqua-helm https://helm.aquasec.com
 ```
+
+* Install Aqua Scanner
+
+```bash
+helm upgrade --install --namespace aqua scanner ./scanner --set imageCredentials.username=<>,imageCredentials.password=<>,user=<>,password=<>
+```
+
+Before installing scanner chart the recommendation is to create user with scanning permissions, [Link to documentations](https://docs.aquasec.com/docs/add-scanners#section-add-a-scanner-user)
 
 ## Configurable Variables
 
@@ -32,23 +50,26 @@ The following table lists the configurable parameters of the Console and Enforce
 
 ### Scanner
 
-| Parameter                         | Description                          | Default                                                                      |
-| --------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------- |
-| `rbac.enabled`                    | Create a service account and a ClusterRole    | `false`                                                                   |
-| `rbac.roleRef`                    | Use an existing ClusterRole    | ``                                                                   |
-| `admin.token`                    | Use this Aqua license token   | `N/A`                                                                   |
-| `admin.password`                    | Use this Aqua admin password   | `N/A`                                                                  |
-| `docker.socket.path`                    | Docker Socket Path   | `/var/run/docker.sock`                                                                  |
-| `serviceAccount`                    | Service Account to use   | `csp-sa`                                                                  |
-| `server.serviceName`                    | Service name of aqua server ui   | `csp-consul-svc`                                                                  |
-| `server.port`                    | service svc port   | `8080`                                                                  |
-| `docker.socket.path`                    | Docker Socket Path   | `/var/run/docker.sock`                                                                  |
-| `docker.socket.path`                    | Docker Socket Path   | `/var/run/docker.sock`                                                                  |
-| `enabled`                 | Enable the Scanner-CLI component  | `false`                                        |
-| `replicaCount`                | Number of Scanner-CLI replicas to run  | `1`                                        |
-| `user`                | Username for the scanner user assigned to the Scanner role  | `N/A`                                        |
-| `password`                | Password for scanner user  | `N/A`                                        |
+Parameter | Description | Default| Mandatory 
+--------- | ----------- | ------- | ------- 
+`repositoryUriPrefix` | repository uri prefix for dockerhub set `docker.io` | `registry.aquasec.com`| `YES` 
+`dockerSocket.mount` | boolean parameter if to mount docker socket | `unset`| `NO` 
+`dockerSocket.path` | docker socket path | `/var/run/docker.sock`| `NO` 
+`serviceAccount` | k8s service account to use | `aqua-sa`| `YES` 
+`server.serviceName` | service name for server to connect | `aqua-console-svc`| `YES` 
+`server.port` | service port for server to connect | `8080`| `YES` 
+`image.repository` | the docker image name to use | `scanner`| `YES` 
+`image.tag` | The image tag to use. | `5.3`| `YES` 
+`image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO` 
+`user` | scanner username | `unset`| `YES` 
+`password` | scanner password | `unset`| `YES` 
+`replicaCount` | replica count | `1`| `NO` 
+`resources` |	Resource requests and limits | `{}`| `NO` 
+`nodeSelector` |	Kubernetes node selector	| `{}`| `NO` 
+`tolerations` |	Kubernetes node tolerations	| `[]`| `NO` 
+`affinity` |	Kubernetes node affinity | `{}`| `NO` 
+`extraEnvironmentVars` | is a list of extra enviroment variables to set in the scanner deployments. | `{}`| `NO` 
+`extraSecretEnvironmentVars` | is a list of extra enviroment variables to set in the scanner deployments, these variables take value from existing Secret objects. | `[]`| `NO` 
+## Issues and feedback
 
-## Support
-
-If you encounter any problems or would like to give us feedback on deployments, we encourage you to raise issues here on GitHub please contact us at https://github.com/aquasecurity.
+If you encounter any problems or would like to give us feedback on deployments, we encourage you to raise issues here on GitHub.
