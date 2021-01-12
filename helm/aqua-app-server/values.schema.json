@@ -11,16 +11,7 @@
                 "password": {
                     "type": ["null", "string"]
                 },
-                "passwordkey": {
-                    "type": ["null", "string"]
-                },
-                "secretname": {
-                    "type": ["null", "string"]
-                },
                 "token": {
-                    "type": ["null", "string"]
-                },
-                "tokenkey": {
                     "type": ["null", "string"]
                 }
             }

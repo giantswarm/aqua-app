@@ -19,9 +19,6 @@ activeactive:
 admin:
   token:
   password:
-  secretname: null
-  tokenkey: null
-  passwordkey: null
 
 dockerSock:
   mount:  # put true for mount docker socket.
