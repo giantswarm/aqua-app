@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [5.3.0] - 2021-01-12
+
 ### Changed
 
 - Updated all charts to upstream 5.3. ([#34](https://github.com/giantswarm/aqua-app/pull/34))
@@ -50,7 +52,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Updated image versions from `4.5.20069` to `4.6.20156`.
 
-[Unreleased]: https://github.com/giantswarm/aqua-app/compare/v4.6.3...HEAD
+[Unreleased]: https://github.com/giantswarm/aqua-app/compare/v5.3.0...HEAD
+[5.3.0]: https://github.com/giantswarm/aqua-app/compare/v4.6.3...v5.3.0
 [4.6.3]: https://github.com/giantswarm/aqua-app/compare/v4.6.2...v4.6.3
 [4.6.2]: https://github.com/giantswarm/aqua-app/compare/v4.6.1...v4.6.2
 [4.6.1]: https://github.com/giantswarm/aqua-app/compare/v4.6.0...v4.6.1
