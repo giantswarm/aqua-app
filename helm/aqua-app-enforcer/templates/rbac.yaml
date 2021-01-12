@@ -37,7 +37,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
     rbac.example.com/aggregate-to-monitoring: "true"
 rules:
-- apiGroups: ["extensions"]
+- apiGroups: ["policy"]
   resourceNames: [{{ .Release.Name }}-psp]
   resources: ["podsecuritypolicies"]
   verbs: ["use"]
