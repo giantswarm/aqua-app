@@ -7,7 +7,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Updated all charts to upstream 5.3. ([#34](https://github.com/giantswarm/aqua-app/pull/34))
+
 ### Added
+
 - Added values.schema.json to validate default values
 
 ## [4.6.3] - 2020-09-02
