@@ -3,22 +3,22 @@
     "type": "object",
     "properties": {
         "enforcerLogicalName": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "enforcerToken": {
             "type": "string"
         },
         "enforcerTokenSecretKey": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "enforcerTokenSecretName": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "envoy": {
             "type": "object",
             "properties": {
                 "configMap": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 },
                 "enabled": {
                     "type": "boolean"
@@ -43,7 +43,7 @@
             }
         },
         "hostRunPath": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "image": {
             "type": "object",
@@ -66,16 +66,16 @@
                     "type": "boolean"
                 },
                 "name": {
-                    "type": "string"
+                    "type": ["null", "string"]
                 },
                 "password": {
                     "type": "string"
                 },
                 "registry": {
-                    "type": "string"
+                    "type": ["null", "string"]
                 },
                 "repositoryUriPrefix": {
-                    "type": "string"
+                    "type": ["null", "string"]
                 },
                 "username": {
                     "type": "string"
@@ -86,7 +86,7 @@
             "type": "object"
         },
         "logLevel": {
-            "type": "null"
+            "type": ["null", "string"]
         },
         "nodeSelector": {
             "type": "object"
@@ -98,7 +98,7 @@
                     "type": "boolean"
                 },
                 "roleRef": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 }
             }
         },
