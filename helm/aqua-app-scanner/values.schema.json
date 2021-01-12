@@ -5,6 +5,23 @@
         "affinity": {
             "type": "object"
         },
+        "dockerSock": {
+            "type": "object",
+            "properties": {
+                "mount": {
+                    "type": ["null", "boolean"]
+                },
+                "path": {
+                    "type": "string"
+                }
+            }
+        },
+        "extraEnvironmentVars": {
+            "type": "object"
+        },
+        "extraSecretEnvironmentVars": {
+            "type": "array"
+        },
         "image": {
             "type": "object",
             "properties": {
@@ -23,15 +40,15 @@
             "type": "object",
             "properties": {
                 "name": {
-                    "type": "string"
-                },
-                "repositoryUriPrefix": {
-                    "type": "string"
+                    "type": ["null", "string"]
                 }
             }
         },
         "livenessProbe": {
             "type": "object"
+        },
+        "logLevel": {
+            "type": ["null", "string"]
         },
         "nodeSelector": {
             "type": "object"
@@ -49,7 +66,7 @@
                     "type": "boolean"
                 },
                 "roleRef": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 }
             }
         },
@@ -59,11 +76,17 @@
         "replicaCount": {
             "type": "integer"
         },
+        "repositoryUriPrefix": {
+            "type": "string"
+        },
         "resources": {
             "type": "object"
         },
         "secretName": {
             "type": ["null", "string"]
+        },
+        "securityContext": {
+            "type": "object"
         },
         "server": {
             "type": "object",
