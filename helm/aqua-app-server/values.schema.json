@@ -157,7 +157,7 @@
                     "type": "object"
                 },
                 "passwordSecret": {
-                    "type": ["null", "boolean"]
+                    "type": ["null", "string"]
                 },
                 "persistence": {
                     "type": "object",
