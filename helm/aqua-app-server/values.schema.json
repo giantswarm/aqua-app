@@ -56,7 +56,7 @@
                             "type": "null"
                         },
                         "auditPassword": {
-                            "type": "boolean"
+                            "type": "null"
                         },
                         "auditPort": {
                             "type": "null"
