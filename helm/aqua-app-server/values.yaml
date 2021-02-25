@@ -21,8 +21,8 @@ admin:
   password:
 
 dockerSock:
-  mount: # put true for mount docker socket.
-  path: /var/run/docker.sock # pks - /var/vcap/data/sys/run/docker/docker.sock
+  mount:  # put true for mount docker socket.
+  path: /var/run/docker.sock  # pks - /var/vcap/data/sys/run/docker/docker.sock
 
 db:
   external:
@@ -195,8 +195,8 @@ web:
     enabled: false
     annotations: {}
     #  kubernetes.io/ingress.class: nginx
-    hosts: #REQUIRED
-    #- aquasec-test.example.com
+    hosts:  # REQUIRED
+    # - aquasec-test.example.com
     tls: []
     #  - secretName: aquasec-tls
     #    hosts:
@@ -257,7 +257,7 @@ envoy:
 
   service:
     type: LoadBalancer
-    annotations: 
+    annotations: []
       # service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
       # service.beta.kubernetes.io/aws-load-balancer-internal: "false"
       # service.beta.kubernetes.io/aws-load-balancer-type: nlb
@@ -390,7 +390,7 @@ envoy:
               - endpoint:
                   address:
                     socket_address:
-                      address: {{ .Release.Name }}-gateway-headless-svc.{{ .Release.Namespace }}                  
+                      address: {{ .Release.Name }}-gateway-headless-svc.{{ .Release.Namespace }}
                       port_value: 8443
           transport_socket:
               name: envoy.transport_sockets.tls
