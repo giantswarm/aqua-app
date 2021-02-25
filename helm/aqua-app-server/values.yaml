@@ -1,9 +1,9 @@
 # Specifies the secret data for imagePullSecrets needed to fetch the private docker images
 imageCredentials:
   create: true
-  name: aqua-registry-secret # example
-  repositoryUriPrefix: "registry.aquasec.com" # for dockerhub - "docker.io"
-  registry: "registry.aquasec.com" #REQUIRED only if create is true, for dockerhub - "index.docker.io/v1/"
+  name: giantswarm-partner-aqua-pull-secret  # example
+  repositoryUriPrefix: "quay.io"  # for dockerhub - "docker.io"
+  registry: "quay.io"  # REQUIRED only if create is true, for dockerhub - "index.docker.io/v1/"
   username: ""
   password: ""
 
@@ -52,7 +52,7 @@ db:
   ssl: false
   auditssl: false
   image:
-    repository: database
+    repository: giantswarm/aqua-database
     tag: "5.3"
     pullPolicy: IfNotPresent
   service:
@@ -108,7 +108,7 @@ gate:
   replicaCount: 1
   logLevel:
   image:
-    repository: gateway
+    repository: giantswarm/aqua-gateway
     tag: "5.3"
     pullPolicy: IfNotPresent
   service:
@@ -174,7 +174,7 @@ web:
   replicaCount: 1
   logLevel:
   image:
-    repository: console
+    repository: giantswarm/aqua-console
     tag: "5.3"
     pullPolicy: IfNotPresent
   service:
