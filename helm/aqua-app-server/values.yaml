@@ -36,7 +36,7 @@ db:
     auditHost:
     auditPort:
     auditUser:
-    auditPassword: true
+    auditPassword:
     pubsubName:
     pubsubHost:
     pubsubPort:
