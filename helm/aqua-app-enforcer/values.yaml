@@ -45,7 +45,7 @@ gate:
   port: 8443
 
 image:
-  repository: enforcer
+  repository: giantswarm/aqua-enforcer
   tag: "5.3"
   pullPolicy: IfNotPresent
 
