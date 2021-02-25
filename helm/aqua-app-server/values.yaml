@@ -1,9 +1,9 @@
 # Specifies the secret data for imagePullSecrets needed to fetch the private docker images
 imageCredentials:
   create: true
-  name: giantswarm-partner-aqua-pull-secret  # example
-  repositoryUriPrefix: "quay.io"  # for dockerhub - "docker.io"
-  registry: "quay.io"  # REQUIRED only if create is true, for dockerhub - "index.docker.io/v1/"
+  name: aqua-registry-secret # example
+  repositoryUriPrefix: "registry.aquasec.com" # for dockerhub - "docker.io"
+  registry: "registry.aquasec.com" #REQUIRED only if create is true, for dockerhub - "index.docker.io/v1/"
   username: ""
   password: ""
 
@@ -21,8 +21,8 @@ admin:
   password:
 
 dockerSock:
-  mount:  # put true for mount docker socket.
-  path: /var/run/docker.sock  # pks - /var/vcap/data/sys/run/docker/docker.sock
+  mount: # put true for mount docker socket.
+  path: /var/run/docker.sock # pks - /var/vcap/data/sys/run/docker/docker.sock
 
 db:
   external:
@@ -52,7 +52,7 @@ db:
   ssl: false
   auditssl: false
   image:
-    repository: giantswarm/aqua-database
+    repository: database
     tag: "5.3"
     pullPolicy: IfNotPresent
   service:
@@ -83,10 +83,10 @@ db:
   resources: {}
     # Note: For recommendations please check the official sizing guide.
     # requests:
-    #   cpu: 3000
+    #   cpu: 3000m
     #   memory: 6Gi
     # limits:
-    #   cpu: 12000
+    #   cpu: 12000m
     #   memory: 20Gi
   nodeSelector: {}
   tolerations: []
@@ -108,7 +108,7 @@ gate:
   replicaCount: 1
   logLevel:
   image:
-    repository: giantswarm/aqua-gateway
+    repository: gateway
     tag: "5.3"
     pullPolicy: IfNotPresent
   service:
@@ -131,15 +131,24 @@ gate:
         targetPort: 8082
         nodePort:
   publicIP:
-  livenessProbe: {}
-  readinessProbe: {}
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 8082
+    initialDelaySeconds: 60
+    periodSeconds: 30
+  readinessProbe:
+    tcpSocket:
+      port: 8443
+    initialDelaySeconds: 60
+    periodSeconds: 30
   resources: {}
     # Note: For recommendations please check the official sizing guide.
     # requests:
-    #   cpu: 1500
+    #   cpu: 1500m
     #   memory: 7Gi
     # limits:
-    #   cpu: 6000
+    #   cpu: 6000m
     #   memory: 10Gi
   nodeSelector: {}
   tolerations: []
@@ -165,7 +174,7 @@ web:
   replicaCount: 1
   logLevel:
   image:
-    repository: giantswarm/aqua-console
+    repository: console
     tag: "5.3"
     pullPolicy: IfNotPresent
   service:
@@ -186,21 +195,36 @@ web:
     enabled: false
     annotations: {}
     #  kubernetes.io/ingress.class: nginx
-    hosts:  # REQUIRED
-    # - aquasec-test.example.com
+    hosts: #REQUIRED
+    #- aquasec-test.example.com
     tls: []
     #  - secretName: aquasec-tls
     #    hosts:
     #      - aquasec.domain.com
-  livenessProbe: {}
-  readinessProbe: {}
+
+  # Note: Please change the ports according to the requirement.
+  # default liveness and readiness probe
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 8080
+    initialDelaySeconds: 60
+    periodSeconds: 30
+
+  readinessProbe:
+    httpGet:
+      path: /
+      port: 8080
+    initialDelaySeconds: 60
+    periodSeconds: 30
+
   resources: {}
     # Note: For recommendations please check the official sizing guide.
     # requests:
-    #   cpu: 2000
+    #   cpu: 2000m
     #   memory: 3Gi
     # limits:
-    #   cpu: 6000
+    #   cpu: 6000m
     #   memory: 10Gi
   nodeSelector: {}
   tolerations: []
@@ -233,13 +257,11 @@ envoy:
 
   service:
     type: LoadBalancer
-    annotations: {}
+    annotations: 
+      # service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+      # service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+      # service.beta.kubernetes.io/aws-load-balancer-type: nlb
     ports:
-    - name: healthserver
-      port: 8082
-      targetPort: 8082
-      nodePort:
-      protocol: TCP
     - name: https
       port: 443
       targetPort: 8443
@@ -278,10 +300,10 @@ envoy:
   resources: {}
     # Note: For recommendations please check the official sizing guide.
     # requests:
-    #   cpu: 2000
+    #   cpu: 2000m
     #   memory: 4Gi
     # limits:
-    #   cpu: 4000
+    #   cpu: 4000m
     #   memory: 10Gi
   nodeSelector: {}
   tolerations: []
@@ -368,7 +390,7 @@ envoy:
               - endpoint:
                   address:
                     socket_address:
-                      address: {{ .Release.Name }}-gateway-headless-svc.{{ .Release.Namespace }}.svc.cluster.local
+                      address: {{ .Release.Name }}-gateway-headless-svc.{{ .Release.Namespace }}                  
                       port_value: 8443
           transport_socket:
               name: envoy.transport_sockets.tls
