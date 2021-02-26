@@ -118,7 +118,7 @@ gate:
       - name: aqua-gate
         port: 3622
         targetPort: 3622
-        nodePort: 
+        nodePort:
         protocol: TCP
       - name: aqua-gate-ssl
         port: 8443
