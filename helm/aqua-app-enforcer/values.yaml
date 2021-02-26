@@ -9,11 +9,11 @@ imageCredentials:
 
 enforcerToken: ""
 
-enforcerTokenSecretName: null
-enforcerTokenSecretKey: null
-enforcerLogicalName:
+enforcerTokenSecretName: ""
+enforcerTokenSecretKey: ""
+enforcerLogicalName: ""
 
-logLevel:
+logLevel: "INFO"
 
 securityContext:
   privileged: true
@@ -34,11 +34,11 @@ securityContext:
   #     - SYSLOG
   #     - SYS_CHROOT
 
-hostRunPath:  # pks - /var/vcap/sys/run/docker
+hostRunPath: ""  # pks - /var/vcap/sys/run/docker
 
 rbac:
   enabled: true
-  roleRef:
+  roleRef: ""
 
 gate:
   host: aqua-gateway-svc  # for envoy deployment use host for aqua-lb and port 443
@@ -82,4 +82,4 @@ extraSecretEnvironmentVars: []
 envoyCerts:
   enabled: false        # change to true advance deployment enabling
 
-certsSecretName:        # name of the certs secret name to establish the tls connection between enforcer and envoy
+certsSecretName: ""     # name of the certs secret name to establish the tls connection between enforcer and envoy
