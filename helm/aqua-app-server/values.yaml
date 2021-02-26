@@ -10,45 +10,45 @@ imageCredentials:
 rbac:
   enabled: true
   privileged: true
-  roleRef:
+  roleRef: ""
 
 # enable only one of the modes
-clustermode:
-activeactive:
+clustermode: false
+activeactive: false
 
 admin:
-  token:
-  password:
+  token: ""
+  password: ""
 
 dockerSock:
-  mount:  # put true for mount docker socket.
+  mount: false  # put true for mount docker socket.
   path: /var/run/docker.sock  # pks - /var/vcap/data/sys/run/docker/docker.sock
 
 db:
   external:
     enabled: false
-    name:
-    host:
-    port:
-    user:
-    password:
-    auditName:
-    auditHost:
-    auditPort:
-    auditUser:
-    auditPassword:
-    pubsubName:
-    pubsubHost:
-    pubsubPort:
-    pubsubUser:
-    pubsubPassword:
-  passwordSecret:
-  dbPasswordName:
-  dbPasswordKey:
-  dbAuditPasswordName:
-  dbAuditPasswordKey:
-  dbPubsubPasswordName:
-  dbPubsubPasswordKey:
+    name: ""
+    host: ""
+    port: ""
+    user: ""
+    password: ""
+    auditName: ""
+    auditHost: ""
+    auditPort: ""
+    auditUser: ""
+    auditPassword: ""
+    pubsubName: ""
+    pubsubHost: ""
+    pubsubPort: ""
+    pubsubUser: ""
+    pubsubPassword: ""
+  passwordSecret: ""
+  dbPasswordName: ""
+  dbPasswordKey: ""
+  dbAuditPasswordName: ""
+  dbAuditPasswordKey: ""
+  dbPubsubPasswordName: ""
+  dbPubsubPasswordKey: ""
   ssl: false
   auditssl: false
   image:
@@ -59,7 +59,7 @@ db:
     type: ClusterIP
   persistence:
     enabled: true
-    storageClass:
+    storageClass: ""
     size: 30Gi
     accessMode: ReadWriteOnce
   livenessProbe:
@@ -106,7 +106,7 @@ db:
 
 gate:
   replicaCount: 1
-  logLevel:
+  logLevel: "INFO"
   image:
     repository: giantswarm/aqua-gateway
     tag: "5.3"
@@ -118,7 +118,7 @@ gate:
       - name: aqua-gate
         port: 3622
         targetPort: 3622
-        nodePort:
+        nodePort: 
         protocol: TCP
       - name: aqua-gate-ssl
         port: 8443
@@ -130,7 +130,7 @@ gate:
         protocol: TCP
         targetPort: 8082
         nodePort:
-  publicIP:
+  publicIP: ""
   livenessProbe:
     httpGet:
       path: /
@@ -172,7 +172,7 @@ gate:
 
 web:
   replicaCount: 1
-  logLevel:
+  logLevel: "INFO"
   image:
     repository: giantswarm/aqua-console
     tag: "5.3"
@@ -195,7 +195,7 @@ web:
     enabled: false
     annotations: {}
     #  kubernetes.io/ingress.class: nginx
-    hosts:  # REQUIRED
+    hosts: ""  # REQUIRED
     # - aquasec-test.example.com
     tls: []
     #  - secretName: aquasec-tls
@@ -268,7 +268,7 @@ envoy:
       nodePort:
       protocol: TCP
 
-  certsSecretName:
+  certsSecretName: ""
 
   livenessProbe:
     failureThreshold: 3

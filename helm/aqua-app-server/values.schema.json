@@ -3,21 +3,21 @@
     "type": "object",
     "properties": {
         "activeactive": {
-            "type": "null"
+            "type": "boolean"
         },
         "admin": {
             "type": "object",
             "properties": {
                 "password": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "token": {
-                    "type": "null"
+                    "type": "string"
                 }
             }
         },
         "clustermode": {
-            "type": "null"
+            "type": "boolean"
         },
         "db": {
             "type": "object",
@@ -29,73 +29,73 @@
                     "type": "boolean"
                 },
                 "dbAuditPasswordKey": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "dbAuditPasswordName": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "dbPasswordKey": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "dbPasswordName": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "dbPubsubPasswordKey": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "dbPubsubPasswordName": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "external": {
                     "type": "object",
                     "properties": {
                         "auditHost": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "auditName": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "auditPassword": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "auditPort": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "auditUser": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "enabled": {
                             "type": "boolean"
                         },
                         "host": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "name": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "password": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "port": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "pubsubHost": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "pubsubName": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "pubsubPassword": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "pubsubPort": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "pubsubUser": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "user": {
-                            "type": "null"
+                            "type": "string"
                         }
                     }
                 },
@@ -148,7 +148,7 @@
                     "type": "object"
                 },
                 "passwordSecret": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "persistence": {
                     "type": "object",
@@ -163,7 +163,7 @@
                             "type": "string"
                         },
                         "storageClass": {
-                            "type": "null"
+                            "type": "string"
                         }
                     }
                 },
@@ -218,7 +218,7 @@
             "type": "object",
             "properties": {
                 "mount": {
-                    "type": "null"
+                    "type": "boolean"
                 },
                 "path": {
                     "type": "string"
@@ -232,7 +232,7 @@
                     "type": "object"
                 },
                 "certsSecretName": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "enabled": {
                     "type": "boolean"
@@ -382,7 +382,7 @@
                                         "type": "string"
                                     },
                                     "nodePort": {
-                                        "type": "null"
+                                        "type": ["null", "integer"]
                                     },
                                     "port": {
                                         "type": "integer"
@@ -455,13 +455,13 @@
                     }
                 },
                 "logLevel": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "nodeSelector": {
                     "type": "object"
                 },
                 "publicIP": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "readinessProbe": {
                     "type": "object",
@@ -506,7 +506,7 @@
                                         "type": "string"
                                     },
                                     "nodePort": {
-                                        "type": "null"
+                                        "type": ["null", "integer"]
                                     },
                                     "port": {
                                         "type": "integer"
@@ -563,7 +563,7 @@
                     "type": "boolean"
                 },
                 "roleRef": {
-                    "type": "null"
+                    "type": "string"
                 }
             }
         },
@@ -603,7 +603,7 @@
                             "type": "boolean"
                         },
                         "hosts": {
-                            "type": "null"
+                            "type": "string"
                         },
                         "tls": {
                             "type": "array"
@@ -633,7 +633,7 @@
                     }
                 },
                 "logLevel": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "nodeSelector": {
                     "type": "object"
@@ -684,7 +684,7 @@
                                         "type": "string"
                                     },
                                     "nodePort": {
-                                        "type": "null"
+                                        "type": ["null", "integer"]
                                     },
                                     "port": {
                                         "type": "integer"
