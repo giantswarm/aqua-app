@@ -12,6 +12,12 @@ rbac:
   privileged: true
   roleRef: ""
 
+#Please specify k8s platform acronym. Allowed values are aks, eks, gke, openshift
+platform: gaintswarm
+
+openshift_route:
+  create: false    #Enable if required openshift route for web and gateway
+
 # enable only one of the modes
 clustermode: false
 activeactive: false
@@ -42,15 +48,25 @@ db:
     pubsubPort: ""
     pubsubUser: ""
     pubsubPassword: ""
-  passwordSecret: ""
-  dbPasswordName: ""
-  dbPasswordKey: ""
-  dbAuditPasswordName: ""
-  dbAuditPasswordKey: ""
-  dbPubsubPasswordName: ""
-  dbPubsubPasswordKey: ""
+
+  passwordFromSecret:
+    enabled: false              #Enable if loading passwords for db and audit-db from secret
+    dbPasswordName: ""            #Specify the Password Secret name used for db password
+    dbPasswordKey: ""             #Specify the db password key name stored in the #dbPasswordName secret
+    dbAuditPasswordName: ""          #Specify the Password Secret name used for audit db password
+    dbAuditPasswordKey: ""            #Specify the audit db password key name stored in the #dbAuditPasswordName secret
+    dbPubsubPasswordName: ""           #Specify the Password Secret name used for pubsub db password
+    dbPubsubPasswordKey: ""           #Specify the pubsub db password key name stored in the #PubsubPasswordName secret
+
   ssl: false
   auditssl: false
+
+  securityContext:
+    runAsUser: 70
+    runAsGroup: 70
+    fsGroup: 11433
+  container_securityContext:
+    privileged: false
   image:
     repository: giantswarm/aqua-database
     tag: "5.3"
@@ -91,7 +107,6 @@ db:
   nodeSelector: {}
   tolerations: []
   affinity: {}
-  securityContext: {}
 
   # extraEnvironmentVars is a list of extra enviroment variables to set in the database deployments.
   extraEnvironmentVars: {}
@@ -141,7 +156,7 @@ gate:
     tcpSocket:
       port: 8443
     initialDelaySeconds: 60
-    periodSeconds: 30
+    periodSeconds: 60
   resources: {}
     # Note: For recommendations please check the official sizing guide.
     # requests:
@@ -153,15 +168,24 @@ gate:
   nodeSelector: {}
   tolerations: []
   affinity: {}
-  securityContext: {}
-  #  runAsUser: 11431
-  #  runAsGroup: 11433
-  #  fsGroup: 11433
+  securityContext:
+    runAsUser: 11431
+    runAsGroup: 11433
+    fsGroup: 11433
+  container_securityContext: {}
+
+  TLS:
+    enabled: false      # change to true for enabling secure communication
+    secretName:         #created certs secret name for gate
+    #Follow Advance configuration for mTLS communication establishment and place your certs in /opt/aquasec/ssl/ path
 
   # extraEnvironmentVars is a list of extra enviroment variables to set in the gateway deployments.
   # https://docs.aquasec.com/docs/gateway-optional-variables
   extraEnvironmentVars: {}
     # ENV_NAME: value
+    #Example for mTLS env variables:
+    #AQUA_PUBLIC_KEY: "/opt/aquasec/ssl/<file_name>"
+    #AQUA_PRIVATE_KEY: "/opt/aquasec/ssl/<file_name>"
 
   # extraSecretEnvironmentVars is a list of extra enviroment variables to set in the gateway deployments.
   # These variables take value from existing Secret objects.
@@ -193,6 +217,7 @@ web:
         protocol: TCP
   ingress:
     enabled: false
+    externalPort:
     annotations: {}
     #  kubernetes.io/ingress.class: nginx
     hosts: ""  # REQUIRED
@@ -229,15 +254,25 @@ web:
   nodeSelector: {}
   tolerations: []
   affinity: {}
-  securityContext: {}
-  #  runAsUser: 11431
-  #  runAsGroup: 11433
-  #  fsGroup: 11433
+  securityContext:
+    runAsUser: 11431
+    runAsGroup: 11433
+    fsGroup: 11433
+  container_securityContext: {}
+
+
+  TLS:
+    enabled: false      # change to true for enabling secure communication
+    secretName:         #created certs secret name for web
+    #Follow Advance configuration for mTLS communication establishment and place your certs in /opt/aquasec/ssl/
 
   # extraEnvironmentVars is a list of extra enviroment variables to set in the web deployments.
   # https://docs.aquasec.com/docs/server-optional-variables
   extraEnvironmentVars: {}
     # ENV_NAME: value
+    #Example for mTLS env variables:
+    #AQUA_PUBLIC_KEY: "/opt/aquasec/ssl/<file_name>"
+    #AQUA_PRIVATE_KEY: "/opt/aquasec/ssl/<file_name>"
 
   # extraSecretEnvironmentVars is a list of extra enviroment variables to set in the web deployments.
   # These variables take value from existing Secret objects.
