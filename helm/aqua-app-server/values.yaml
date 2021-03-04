@@ -12,11 +12,11 @@ rbac:
   privileged: true
   roleRef: ""
 
-#Please specify k8s platform acronym. Allowed values are aks, eks, gke, openshift
+# Please specify k8s platform acronym. Allowed values are aks, eks, gke, openshift
 platform: gaintswarm
 
 openshift_route:
-  create: false    #Enable if required openshift route for web and gateway
+  create: false    # Enable if required openshift route for web and gateway
 
 # enable only one of the modes
 clustermode: false
@@ -50,13 +50,13 @@ db:
     pubsubPassword: ""
 
   passwordFromSecret:
-    enabled: false              #Enable if loading passwords for db and audit-db from secret
-    dbPasswordName: ""            #Specify the Password Secret name used for db password
-    dbPasswordKey: ""             #Specify the db password key name stored in the #dbPasswordName secret
-    dbAuditPasswordName: ""          #Specify the Password Secret name used for audit db password
-    dbAuditPasswordKey: ""            #Specify the audit db password key name stored in the #dbAuditPasswordName secret
-    dbPubsubPasswordName: ""           #Specify the Password Secret name used for pubsub db password
-    dbPubsubPasswordKey: ""           #Specify the pubsub db password key name stored in the #PubsubPasswordName secret
+    enabled: false              # Enable if loading passwords for db and audit-db from secret
+    dbPasswordName: ""            # Specify the Password Secret name used for db password
+    dbPasswordKey: ""             # Specify the db password key name stored in the #dbPasswordName secret
+    dbAuditPasswordName: ""          # Specify the Password Secret name used for audit db password
+    dbAuditPasswordKey: ""            # Specify the audit db password key name stored in the #dbAuditPasswordName secret
+    dbPubsubPasswordName: ""           # Specify the Password Secret name used for pubsub db password
+    dbPubsubPasswordKey: ""           # Specify the pubsub db password key name stored in the #PubsubPasswordName secret
 
   ssl: false
   auditssl: false
@@ -176,16 +176,16 @@ gate:
 
   TLS:
     enabled: false      # change to true for enabling secure communication
-    secretName:         #created certs secret name for gate
-    #Follow Advance configuration for mTLS communication establishment and place your certs in /opt/aquasec/ssl/ path
+    secretName:         # created certs secret name for gate
+    # Follow Advance configuration for mTLS communication establishment and place your certs in /opt/aquasec/ssl/ path
 
   # extraEnvironmentVars is a list of extra enviroment variables to set in the gateway deployments.
   # https://docs.aquasec.com/docs/gateway-optional-variables
   extraEnvironmentVars: {}
     # ENV_NAME: value
-    #Example for mTLS env variables:
-    #AQUA_PUBLIC_KEY: "/opt/aquasec/ssl/<file_name>"
-    #AQUA_PRIVATE_KEY: "/opt/aquasec/ssl/<file_name>"
+    # Example for mTLS env variables:
+    # AQUA_PUBLIC_KEY: "/opt/aquasec/ssl/<file_name>"
+    # AQUA_PRIVATE_KEY: "/opt/aquasec/ssl/<file_name>"
 
   # extraSecretEnvironmentVars is a list of extra enviroment variables to set in the gateway deployments.
   # These variables take value from existing Secret objects.
@@ -263,16 +263,16 @@ web:
 
   TLS:
     enabled: false      # change to true for enabling secure communication
-    secretName:         #created certs secret name for web
-    #Follow Advance configuration for mTLS communication establishment and place your certs in /opt/aquasec/ssl/
+    secretName:         # created certs secret name for web
+    # Follow Advance configuration for mTLS communication establishment and place your certs in /opt/aquasec/ssl/
 
   # extraEnvironmentVars is a list of extra enviroment variables to set in the web deployments.
   # https://docs.aquasec.com/docs/server-optional-variables
   extraEnvironmentVars: {}
     # ENV_NAME: value
-    #Example for mTLS env variables:
-    #AQUA_PUBLIC_KEY: "/opt/aquasec/ssl/<file_name>"
-    #AQUA_PRIVATE_KEY: "/opt/aquasec/ssl/<file_name>"
+    # Example for mTLS env variables:
+    # AQUA_PUBLIC_KEY: "/opt/aquasec/ssl/<file_name>"
+    # AQUA_PRIVATE_KEY: "/opt/aquasec/ssl/<file_name>"
 
   # extraSecretEnvironmentVars is a list of extra enviroment variables to set in the web deployments.
   # These variables take value from existing Secret objects.
