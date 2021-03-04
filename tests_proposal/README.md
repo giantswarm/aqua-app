@@ -25,6 +25,35 @@ for app_name in "aqua-app-server" "aqua-app-scanner" "aqua-app-enforcer"
 end
 
 
+# the aqua test needs two files with credentials to be present.
+#
+# just the licence token in a plain text file
+# -> ./tests_proposal/secrets/aqua-license-token
+#
+# and a pull secret for the quay.io giantswarm account     
+# -> ./tests_proposal/secrets/registry-auth-quay-secret.yaml
+# should look like this:
+#
+# kind: Secret
+# apiVersion: v1
+# metadata:
+#   name: giantswarm-partner-aqua-pull-secret
+# type: kubernetes.io/dockerconfigjson
+# data:
+#   .dockerconfigjson: {}
+#
+# you can create that file like this:
+# $ docker login quay.io/giantswarm
+#
+# $ docker_config_quay=$(cat $HOME/.docker/config.json \
+#   | jq -c '{auths:{"quay.io":.auths."quay.io"}, HttpHeaders}')
+#
+# $ kubectl create secret generic -n aqua-app giantswarm-partner-aqua-pull-secret \
+#   --from-literal=.dockerconfigjson="$docker_config_quay" \
+#   --type=kubernetes.io/dockerconfigjson \
+#   --dry-run=client -o json
+
+
 docker build -t local/pytest-kube ./tests_proposal/docker
 
 # example for noisy output and keeping the namespace
