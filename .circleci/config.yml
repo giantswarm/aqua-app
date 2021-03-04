@@ -7,6 +7,7 @@ workflows:
     jobs:
       - architect/push-to-app-catalog:
           name: "package and push Aqua Server chart"
+          explicit_allow_chart_name_mismatch: true
           app_catalog: "giantswarm-catalog"
           app_catalog_test: "giantswarm-test-catalog"
           chart: "aqua-app-server"
@@ -16,6 +17,7 @@ workflows:
               only: /^v.*/
       - architect/push-to-app-catalog:
           name: "package and push Aqua Enforcer chart"
+          explicit_allow_chart_name_mismatch: true
           app_catalog: "giantswarm-catalog"
           app_catalog_test: "giantswarm-test-catalog"
           chart: "aqua-app-enforcer"
@@ -27,6 +29,7 @@ workflows:
             - "package and push Aqua Server chart"
       - architect/push-to-app-catalog:
           name: "package and push Aqua Scanner chart"
+          explicit_allow_chart_name_mismatch: true
           app_catalog: "giantswarm-catalog"
           app_catalog_test: "giantswarm-test-catalog"
           chart: "aqua-app-scanner"
