@@ -31,7 +31,7 @@ class TestInstall:
 
         app_resource_namespace = "app-testing"
         app_destination_namespace = random_namespace
-        app_name_suffix = ''.join(random.choices(string.ascii_lowercase, k=5))
+        app_name_suffix = ''.join(random.choices(string.ascii_lowercase, k=5)) + "-tob"
         app_version = "5.3-gs1"
 
         LOGGER.info(f"Destination namespace is {app_destination_namespace}")
@@ -85,132 +85,106 @@ class TestInstall:
         LOGGER.info(f"App resource {app_name} created")
 
         # FIXME hand over kubectl-partial?
-        wait_for_rollout(kubernetes_cluster, f"deployment/{app_name}-console", namespace=app_destination_namespace)
+        wait_for_rollout(kubernetes_cluster, f"deployment/{app_name}-console", 
+                         namespace=app_destination_namespace)
         LOGGER.info(f"deployment/{app_name}-console is ready")
 
 
+        # shortcut to the aqua-server-console service
+        forward_requests_to_aqua_server_console = partial(
+            forward_requests,
+            kubernetes_cluster, 
+            namespace=app_destination_namespace,
+            forward_to=f"service/aqua-app-server-{app_name_suffix}-console-svc",
+            port=8080
+        )
+
+        forward_to_aqua = forward_requests_to_aqua_server_console
+
+
         # wait for console api answer
-        api_answered = False
-        while not api_answered:
-            try:
-                with kubernetes_cluster.port_forward(f"service/aqua-app-server-{app_name_suffix}-console-svc", 8080, namespace=app_destination_namespace, retries=1) as port:
-                    response = requests.get(f"http://localhost:{port}/api")
-                    response.raise_for_status()
-                    api_response = response.json()
-                    # api_response = response.text
-                    LOGGER.info(f"api_response: {api_response}")
+        while True:
+            response = forward_to_aqua(rel_url="/api")
+            LOGGER.info(f"response: {response}")
 
-                    api_answered = "version" in api_response
-                    # status_green = efk_health["status"] == "green"
+            if response and "version" in response:
+                break
+            time.sleep(5)
 
-            # except socket.error as e:
-            except OSError as e:
-                LOGGER.info(f"ConnectionError, will retry: {repr(e)}")
-            except Exception as e:
-                LOGGER.error(repr(e))
-                # ERROR    test_install:test_install.py:135 Exception('kubectl port-forward returned exit code 1')
-                # ERROR    test_install:test_install.py:137 JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
-            if not api_answered:
-                time.sleep(5)
-
-        LOGGER.info(f"console api version: {api_response['version']}")
+        LOGGER.info(f"console api version: {response['version']}")
 
 
+        # set password for admin account
+        data = {
+            "username": "administrator",
+            "password": "testtest",
+            "confirmPwd": "testtest",
+            "email": "",
+            "admin": "",
+            "validLicense": True,
+            "role":{
+                "text": "Administrator",
+                "id": "administrator"
+            },
+            "remember": False
+        }
+        forward_to_aqua(rel_url="/api/v1/reset_admin", json=data)
 
 
+        # login as admin to get api_token
+        data = {
+            "id": "administrator",
+            "password": "testtest",
+            "remember": False
+        }
+        response = forward_to_aqua(rel_url="/api/v1/login", json=data)
+        LOGGER.info(f"response: {response}")
+        api_token = response["token"]
+        LOGGER.info(f"api_token: {api_token}")
 
 
-
-        # add admin
-        # license
-        # create scanner user
-
-        try:
-            with kubernetes_cluster.port_forward(f"service/aqua-app-server-{app_name_suffix}-console-svc", 8080, namespace=app_destination_namespace, retries=1) as port:
-
-                # set password for admin account
-                data = {
-                    "username": "administrator",
-                    "password": "testtest",
-                    "confirmPwd": "testtest",
-                    "email": "",
-                    "admin": "",
-                    "validLicense": True,
-                    "role":{
-                        "text": "Administrator",
-                        "id": "administrator"
-                    },
-                    "remember": False
-                }
-                r = requests.post(f"http://localhost:{port}/api/v1/reset_admin", json=data)
-                r.raise_for_status()
+        # use authentication for following api requests
+        headers = {"Authorization": f"Bearer {api_token}"}
 
 
-                # login as admin to get api_token
-                data = {
-                    "id": "administrator",
-                    "password": "testtest",
-                    "remember": False
-                }
-                r = requests.post(f"http://localhost:{port}/api/v1/login", json=data)
-                r.raise_for_status()
-                api_token = r.json()["token"]
-
-                LOGGER.info(f"api_token: {api_token}")
+        # provide license token
+        aqua_license_token = Path(Path(__file__).parent / "secrets" / "aqua-license-token").read_text()
+        data = {
+            "token": aqua_license_token,
+            "telemetry_enabled": False
+        }
+        forward_to_aqua(rel_url="/api/v2/license", headers=headers, json=data)
 
 
-                # provide license token
-                aqua_license_token = Path(Path(__file__).parent / "secrets" / "aqua-license-token").read_text()
-                data = {
-                    "token": aqua_license_token,
-                    "telemetry_enabled": False
-                }
-                headers = {"Authorization": f"Bearer {api_token}"}
-                r = requests.post(f"http://localhost:{port}/api/v2/license", headers=headers, json=data)
-                r.raise_for_status()
-                
-
-                # read features
-                # FIXME how to check for valid license?
-                headers = {"Authorization": f"Bearer {api_token}"}
-                r = requests.get(f"http://localhost:{port}/api/v2/features", headers=headers)
-                r.raise_for_status()
-                features = r.json()
-
-                # FIXME assert something here
-
-                LOGGER.info(f"features: {features}")
+        # read license info
+        response = forward_to_aqua(rel_url="/api/v2/license", headers=headers)
+        license_info = response
+        LOGGER.info(f"license_info: {license_info}")
 
 
-                # create user account for aqua scanner
-                data = {
-                    "id": "scanner",
-                    "password": "password",
-                    "passwordConfirm": "password",
-                    "roles": ["Scanner"],
-                    "name": "",
-                    "email": "",
-                    "first_time": False
-                }
-                headers = {"Authorization": f"Bearer {api_token}"}
-                r = requests.post(f"http://localhost:{port}/api/v1/users", headers=headers, json=data)
-                r.raise_for_status()
-
-                # FIXME read user and assert
-                LOGGER.info(f"user account for aqua scanner created.")
-
-        except OSError as e:
-            LOGGER.info(f"ConnectionError, will retry: {repr(e)}")
-        except Exception as e:
-            LOGGER.error(repr(e))
+        # read features
+        response = forward_to_aqua(rel_url="/api/v2/features", headers=headers)
+        features = response
+        LOGGER.info(f"features: {features}")
 
 
+        # create user account for aqua scanner
+        data = {
+            "id": "scanner",
+            "password": "password",
+            "passwordConfirm": "password",
+            "roles": ["Scanner"],
+            "name": "",
+            "email": "",
+            "first_time": False
+        }
+        forward_to_aqua(rel_url="/api/v1/users", headers=headers, json=data)
+
+        # FIXME read user and assert
+        LOGGER.info(f"user account for aqua scanner created.")
 
 
-
-
-
-        # ## create aqua scanner
+        # create aqua scanner app
 
         app_name = f"aqua-app-scanner-{app_name_suffix}"
 
@@ -234,92 +208,73 @@ class TestInstall:
         kubectl("create", filename="-", input=yaml.safe_dump_all(app_template(**app_data)), output=None)
         LOGGER.info(f"App resource {app_name} created")
 
-        wait_for_rollout(kubernetes_cluster, f"deployment/{app_name}-scanner", namespace=app_destination_namespace)
+        wait_for_rollout(kubernetes_cluster, f"deployment/{app_name}-scanner", 
+                         namespace=app_destination_namespace)
         LOGGER.info(f"deployment/{app_name}-scanner is ready")
 
 
 
+        # create aqua enforcer app
+
+        response = forward_to_aqua(rel_url="/api/v1/servers", headers=headers)
+        gateway_ids = [gateway["id"] for gateway in response]
+
+        LOGGER.info(f"Gateway IDs: {', '.join(gateway_ids)}")
 
 
-        # ## create aqua enforcer
+        data = {
+            "allowed_labels": [],
+            "allowed_registries": [],
+            "allowed_secrets": [],
+            "audit_failed_login": True,
+            "audit_success_login": True,
+            "container_activity_protection": False,
+            "enforce": False,
+            "description": "",
+            "gateways": gateway_ids,
+            "host_os": "Linux",
+            "hostname": "testgroup",
+            "id": "testgroup",
+            "image_assurance": True,
+            "logicalname": "testgroup",
+            "network_protection": False,
+            "orchestrator": {
+                "type": "kubernetes",
+                "service_account": f"aqua-app-server-{app_name_suffix}-sa",
+                "namespace": app_destination_namespace
+            },
+            "runtime_type": "docker",
+            "sync_host_images": True,
+            "syscall_enabled": False,
+            "token": "",
+            "type": "agent",
+            "user_access_control": False,
+            "allowed_labels_temp": [],
+            "allowed_registries_temp": [],
+            "allowed_secrets_temp": [],
+            "risk_explorer_auto_discovery": False,
+            "allow_kube_enforcer_audit": True,
+            "auto_discovery_enabled": True,
+            "auto_discover_configure_registries": True,
+            "auto_scan_discovered_images_running_containers": True,
+            "admission_control": True,
+            "block_admission_control": False,
+            "micro_enforcer_injection": True,
+            "micro_enforcer_image_name": "",
+            "micro_enforcer_secrets_name": "",
+            "auto_copy_secrets": False,
+            "micro_enforcer_certs_secrets_name": "",
+            "kube_bench_image_name": "",
+            "runtime_policy_name": "",
+            "host_protection": False,
+            "host_network_protection": False,
+            "enforcer_image_name": "registry.aquasec.com/enforcer:5.3.20350"
+        }
 
-        try:
-            with kubernetes_cluster.port_forward(f"service/aqua-app-server-{app_name_suffix}-console-svc", 8080, namespace=app_destination_namespace, retries=1) as port:
+        response = forward_to_aqua(rel_url="/api/v1/hostsbatch", headers=headers, json=data)
+        enforcer_token = response.get("token")
 
-                headers = {"Authorization": f"Bearer {api_token}"}
-                r = requests.get(f"http://localhost:{port}/api/v1/servers", headers=headers)
-                r.raise_for_status()
-                api_result = r.json()
-                gateway_ids = [gateway["id"] for gateway in api_result]
-
-                LOGGER.info(f"Gateway IDs: {', '.join(gateway_ids)}")
-
-
-                data = {
-                    "allowed_labels": [],
-                    "allowed_registries": [],
-                    "allowed_secrets": [],
-                    "audit_failed_login": True,
-                    "audit_success_login": True,
-                    "container_activity_protection": False,
-                    "enforce": False,
-                    "description": "",
-                    "gateways": gateway_ids,
-                    "host_os": "Linux",
-                    "hostname": "testgroup",
-                    "id": "testgroup",
-                    "image_assurance": True,
-                    "logicalname": "testgroup",
-                    "network_protection": False,
-                    "orchestrator": {
-                        "type": "kubernetes",
-                        "service_account": f"aqua-app-server-{app_name_suffix}-sa",
-                        "namespace": app_destination_namespace
-                    },
-                    "runtime_type": "docker",
-                    "sync_host_images": True,
-                    "syscall_enabled": False,
-                    "token": "",
-                    "type": "agent",
-                    "user_access_control": False,
-                    "allowed_labels_temp": [],
-                    "allowed_registries_temp": [],
-                    "allowed_secrets_temp": [],
-                    "risk_explorer_auto_discovery": False,
-                    "allow_kube_enforcer_audit": True,
-                    "auto_discovery_enabled": True,
-                    "auto_discover_configure_registries": True,
-                    "auto_scan_discovered_images_running_containers": True,
-                    "admission_control": True,
-                    "block_admission_control": False,
-                    "micro_enforcer_injection": True,
-                    "micro_enforcer_image_name": "",
-                    "micro_enforcer_secrets_name": "",
-                    "auto_copy_secrets": False,
-                    "micro_enforcer_certs_secrets_name": "",
-                    "kube_bench_image_name": "",
-                    "runtime_policy_name": "",
-                    "host_protection": False,
-                    "host_network_protection": False,
-                    "enforcer_image_name": "registry.aquasec.com/enforcer:5.3.20350"
-                }
-                headers = {"Authorization": f"Bearer {api_token}"}
-                r = requests.post(f"http://localhost:{port}/api/v1/hostsbatch", headers=headers, json=data)
-                r.raise_for_status()
-                api_result = r.json()
-                enforcer_token = api_result.get("token")
-
-                LOGGER.info(f"Enforcer token: {enforcer_token}")
-
-        except OSError as e:
-            LOGGER.info(f"ConnectionError, will retry: {repr(e)}")
-        except Exception as e:
-            LOGGER.error(repr(e))
-
-
-
-
-
+        LOGGER.info(f"Enforcer token: {enforcer_token}")
 
 
         app_name = f"aqua-app-enforcer-{app_name_suffix}"
@@ -343,7 +298,8 @@ class TestInstall:
         kubectl("create", filename="-", input=yaml.safe_dump_all(app_template(**app_data)), output=None)
         LOGGER.info(f"App resource {app_name} created")
 
-        wait_for_rollout(kubernetes_cluster, f"daemonset/{app_name}-ds", namespace=app_destination_namespace)
+        wait_for_rollout(kubernetes_cluster, f"daemonset/{app_name}-ds",
+                         namespace=app_destination_namespace)
         LOGGER.info("aqua-enforcer-ds is ready")
 
 
@@ -351,6 +307,33 @@ class TestInstall:
         # k(f"delete app aqua-app-scanner-{app_name_suffix}", namespace=app_resource_namespace, output=None)
         # k(f"delete app aqua-app-server-{app_name_suffix}", namespace=app_resource_namespace, output=None)
 
+
+
+
+def forward_requests(kubernetes_cluster, namespace, forward_to, port, rel_url="", headers=None, **kwargs):
+        # json=None, 
+    
+    method = "POST" if "json" in kwargs else "GET"
+    if "json" not in kwargs:
+        kwargs["json"] = None
+
+    # FIXME re-raise exception after out of retries
+    try:
+        with kubernetes_cluster.port_forward(forward_to, port, namespace=namespace, 
+                                             retries=1) as f_port:
+
+            r = requests.request(method, f"http://localhost:{f_port}{rel_url}", 
+                                 headers=headers, json=kwargs["json"])
+            r.raise_for_status()
+            try:
+                return r.json()
+            except json.decoder.JSONDecodeError:
+                return r.text
+
+    except OSError as e:
+        LOGGER.info(f"ConnectionError: {repr(e)}")
+    except Exception as e:
+        LOGGER.error(repr(e))
 
 
 def wait_for_rollout(kubernetes_cluster, name, namespace="default"):
@@ -390,10 +373,10 @@ def app_template(name, name_in_catalog, catalog, version, namespace, values_for_
         namespace: {app_destination_namespace}
         version: {app_version}
         # userConfig:
-        #   configMap:
+        #   configMap: 
         #     name: {app_name}-userconfig
         #     namespace: {app_resource_namespace}
-        #   secret:
+        #   secret: 
         #     name: {app_name}-usersecret
         #     namespace: {app_resource_namespace}
         kubeConfig:
@@ -401,7 +384,9 @@ def app_template(name, name_in_catalog, catalog, version, namespace, values_for_
     """))
 
     if values_for_configmap:
-        app_manifest["spec"]["userConfig"] = {}
+        if "userConfig" not in app_manifest["spec"]:
+            app_manifest["spec"]["userConfig"] = {}    
+
         app_manifest["spec"]["userConfig"]["configMap"] = {
             "name": f"{app_name}-userconfig",
             "namespace": f"{app_resource_namespace}"
@@ -414,11 +399,10 @@ def app_template(name, name_in_catalog, catalog, version, namespace, values_for_
               name: {app_name}-userconfig
               namespace: {app_resource_namespace}
             data:
-              values: |
-{indent(yaml.safe_dump(values_for_configmap, width=None), '                ')}
+              values: ""
         """))
 
-        # app_configmap_manifest["data"]["values"] = yaml.safe_dump(values_for_configmap)
+        app_configmap_manifest["data"]["values"] = yaml.safe_dump(values_for_configmap)
 
     # if values_as_secret:
     #     # app_manifest["spec"]["userConfig"] = {}
