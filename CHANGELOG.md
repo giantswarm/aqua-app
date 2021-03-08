@@ -22,7 +22,6 @@ This chart now tracks the Giantswarm Platform specific branch of upstream.
 - Security context to all relevant resources
 - Advance configuration section from upstream to README.md
 
-
 ## [5.3.0] - 2021-01-12
 
 ### Changed
