@@ -7,6 +7,21 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Update
+
+This chart now tracks the [Giantswarm Platform specific branch](https://github.com/aquasecurity/aqua-helm/tree/5.3_Giant_Swarm) of upstream.
+
+### Fixes
+
+- How existing secrets for DB credentials work
+- DB permission template
+- Linting issue and the values.schema.yaml
+
+### Added
+
+- Security context to all relevant resources
+- Advanced configuration section from upstream to README.md
+
 ## [5.3.0] - 2021-01-12
 
 ### Changed
