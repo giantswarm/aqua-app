@@ -220,7 +220,7 @@ web:
     externalPort:
     annotations: {}
     #  kubernetes.io/ingress.class: nginx
-    hosts: {}  # REQUIRED
+    hosts: []  # REQUIRED
     # - aquasec-test.example.com
     tls: []
     #  - secretName: aquasec-tls
