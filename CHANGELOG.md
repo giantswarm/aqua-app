@@ -7,6 +7,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Schema validation
+- Incorrect datatype for .Values.web.ingress.hosts and .Values.envoy.service.annotations
+- Ambiguity for port configurations. now accepts strings or integers
+
 ## [5.3.1] - 2021-03-08
 
 ### Update
