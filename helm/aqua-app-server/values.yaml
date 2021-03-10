@@ -220,7 +220,7 @@ web:
     externalPort:
     annotations: {}
     #  kubernetes.io/ingress.class: nginx
-    hosts: ""  # REQUIRED
+    hosts: []  # REQUIRED
     # - aquasec-test.example.com
     tls: []
     #  - secretName: aquasec-tls
@@ -292,7 +292,7 @@ envoy:
 
   service:
     type: LoadBalancer
-    annotations: []
+    annotations: {}
       # service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
       # service.beta.kubernetes.io/aws-load-balancer-internal: "false"
       # service.beta.kubernetes.io/aws-load-balancer-type: nlb
