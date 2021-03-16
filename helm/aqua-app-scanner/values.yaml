@@ -25,6 +25,13 @@ logLevel: "INFO"
 
 user: ""
 password: ""
+
+userCredentials:
+  enable: false   # enable to true for using secret to load username and password for scanner
+  secretName: ""  #credentials secret name
+  userKey: ""     #username key defined in secret
+  passwordKey: "" #password key defined in secret
+
 replicaCount: 1
 livenessProbe: {}
 readinessProbe: {}

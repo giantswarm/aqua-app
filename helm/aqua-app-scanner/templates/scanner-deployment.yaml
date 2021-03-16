@@ -32,11 +32,18 @@ spec:
         imagePullPolicy: "{{ .Values.image.pullPolicy }}"
         args:
         - daemon
-        - --direct-cc 
+        - --direct-cc
+        {{- if .Values.userCredentials.enable }}
+        - --user
+        - "$(SCANNER_USER)"
+        - --password
+        - "$(SCANNER_PASSWORD)"
+        {{- else }}
         - --user
         - "{{ required "Please specify a username associated with the Scanner role!" .Values.user }}"
         - --password
         - "{{ required "Please specify a password for a user associated with the Scanner role!" .Values.password }}"
+        {{- end }}
         - --host
         - "http://{{ .Values.server.serviceName }}:{{ .Values.server.port }}"
         env:
@@ -46,6 +53,18 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        {{- if .Values.userCredentials.enable }}
+        - name: SCANNER_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.userCredentials.secretName }}
+              key: {{ .Values.userCredentials.userKey }}
+        - name: SCANNER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.userCredentials.secretName }}
+              key: {{ .Values.userCredentials.passwordKey }}
+        {{- end}}
         {{- include "scanner.extraEnvironmentVars" .Values | nindent 8 }}
         {{- include "scanner.extraSecretEnvironmentVars" .Values | nindent 8 }}
         {{- if .Values.dockerSock.mount }}
