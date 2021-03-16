@@ -15,10 +15,6 @@ metadata:
 {{- end }}
 spec:
   type: {{ .Values.gate.service.type }}
-  {{- if eq .Values.gate.service.type "LoadBalancer" }}
-  loadBalancerSourceRanges:
-{{ toYaml .Values.gate.service.loadBalancerSourceRanges | indent 4 }}
-  {{- end }}
   selector:
     app: {{ .Release.Name }}-gateway
   ports:

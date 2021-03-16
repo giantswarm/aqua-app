@@ -9,7 +9,7 @@
             "type": "object",
             "properties": {
                 "mount": {
-                    "type": ["null", "boolean"]
+                    "type": "boolean"
                 },
                 "path": {
                     "type": "string"
@@ -40,7 +40,7 @@
             "type": "object",
             "properties": {
                 "name": {
-                    "type": ["null", "string"]
+                    "type": "string"
                 }
             }
         },
@@ -48,16 +48,13 @@
             "type": "object"
         },
         "logLevel": {
-            "type": ["null", "string"]
+            "type": "string"
         },
         "nodeSelector": {
             "type": "object"
         },
         "password": {
-            "type": ["null", "string"]
-        },
-        "passwordKey": {
-            "type": ["null", "string"]
+            "type": "string"
         },
         "rbac": {
             "type": "object",
@@ -66,7 +63,7 @@
                     "type": "boolean"
                 },
                 "roleRef": {
-                    "type": ["null", "string"]
+                    "type": "string"
                 }
             }
         },
@@ -81,9 +78,6 @@
         },
         "resources": {
             "type": "object"
-        },
-        "secretName": {
-            "type": ["null", "string"]
         },
         "securityContext": {
             "type": "object"
@@ -106,10 +100,7 @@
             "type": "array"
         },
         "user": {
-            "type": ["null", "string"]
-        },
-        "userKey": {
-            "type": ["null", "string"]
+            "type": "string"
         }
     }
 }
