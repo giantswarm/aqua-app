@@ -101,6 +101,23 @@
         },
         "user": {
             "type": "string"
+        },
+        "userCredentials": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean"
+                },
+                "passwordKey": {
+                    "type": "string"
+                },
+                "secretName": {
+                    "type": "string"
+                },
+                "userKey": {
+                    "type": "string"
+                }
+            }
         }
     }
 }
