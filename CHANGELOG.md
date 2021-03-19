@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Scanner: re-added option to provide credentials through secret
+
 ## [5.3.2] - 2021-03-10
 
 ### Fixed
