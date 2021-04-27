@@ -194,7 +194,7 @@ Parameter | Description | Default| Mandatory
 `db.persistence.size` |	Persistent Volume size | `30Gi`| `NO` 
 `db.persistence.storageClass` |	Persistent Volume Storage Class | `unset`| `NO` 
 `db.image.repository` | the docker image name to use | `database`| `NO` 
-`db.image.tag` | The image tag to use. | `5.3`| `NO` 
+`db.image.tag` | The image tag to use. | `5.3.21112`| `NO`
 `db.image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO` 
 `db.service.type` | k8s service type | `ClusterIP`| `NO` 
 `db.resources` |	Resource requests and limits | `{}`| `NO` 
