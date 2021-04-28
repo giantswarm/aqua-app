@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [5.3.4] - 2021-04-28
+
 ### Changed
 
 - Updated container image versions to `5.3.21112`.
@@ -87,7 +89,8 @@ This chart now tracks the [Giantswarm Platform specific branch](https://github.c
 
 - Updated image versions from `4.5.20069` to `4.6.20156`.
 
-[Unreleased]: https://github.com/giantswarm/aqua-app/compare/v5.3.3...HEAD
+[Unreleased]: https://github.com/giantswarm/aqua-app/compare/v5.3.4...HEAD
+[5.3.4]: https://github.com/giantswarm/aqua-app/compare/v5.3.3...v5.3.4
 [5.3.3]: https://github.com/giantswarm/aqua-app/compare/v5.3.2...v5.3.3
 [5.3.2]: https://github.com/giantswarm/aqua-app/compare/v5.3.1...v5.3.2
 [5.3.1]: https://github.com/giantswarm/aqua-app/compare/v5.3.0...v5.3.1
