@@ -46,7 +46,7 @@ gate:
 
 image:
   repository: giantswarm/aqua-enforcer
-  tag: "5.3"
+  tag: "5.3.21112"
   pullPolicy: IfNotPresent
 
 livenessProbe: {}
