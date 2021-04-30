@@ -11,6 +11,8 @@ These are Helm charts for installation and maintenance of Aqua Container Securit
   - [Prerequisites](#prerequisites)
     - [Container Registry Credentials](#container-registry-credentials)
   - [Installing the Chart](#installing-the-chart)
+  - [Advanced Configuration](#advanced-configuration)
+  - [Guide how to create enforcer group in Kubernetes](#guide-how-to-create-enforcer-group-in-kubernetes)
   - [Configurable Variables](#configurable-variables)
     - [Enforcer](#enforcer)
   - [Issues and feedback](#issues-and-feedback)
@@ -125,7 +127,7 @@ Parameter | Description | Default| Mandatory
 `gate.host` | gateway host | `aqua-gateway-svc`| `YES` 
 `gate.port` | gateway port | `8443`| `YES` 
 `image.repository` | the docker image name to use | `enforcer`| `YES` 
-`image.tag` | The image tag to use. | `5.3.21112`| `YES`
+`image.tag` | The image tag to use. | `5.3.21119`| `YES`
 `image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO` 
 `resources` |	Resource requests and limits | `{}`| `NO` 
 `nodeSelector` |	Kubernetes node selector	| `{}`| `NO` 

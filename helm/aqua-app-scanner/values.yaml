@@ -18,7 +18,7 @@ server:
 
 image:
   repository: giantswarm/aqua-scanner
-  tag: "5.3.21112"
+  tag: "5.3.21119"
   pullPolicy: IfNotPresent
 
 logLevel: "INFO"

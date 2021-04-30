@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Updated container image versions to `5.3.21119`.
+
 ## [5.3.4] - 2021-04-28
 
 ### Changed

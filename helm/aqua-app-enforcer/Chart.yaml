@@ -9,5 +9,5 @@ annotations:
     application.giantswarm.io/values-schema: https://raw.githubusercontent.com/giantswarm/aqua-app/v[[ .Version ]]/helm/aqua-app-enforcer/values.schema.json
     application.giantswarm.io/readme: https://raw.githubusercontent.com/giantswarm/aqua-app/v[[ .Version ]]/helm/aqua-app-enforcer/README.md
 name: aqua-app-enforcer
-appVersion: "5.3.21112"
+appVersion: "5.3.21119"
 version: [[ .Version ]]

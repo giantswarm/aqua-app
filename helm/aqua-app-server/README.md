@@ -6,13 +6,15 @@ These are Helm charts for installation and maintenance of Aqua Container Securit
 
 ## Contents
 
-- [Prerequisites](#prerequisites)
-  - [Container Registry Credentials](#container-registry-credentials)
-  - [Ingress](#ingress)
-  - [PostgreSQL database](#postgresql-database)
-- [Installing the Chart](#installing-the-chart)
-- [Configurable Variables](#configurable-variables)
-- [Issues and feedback](#issues-and-feedback)
+- [Aqua Security Server Helm Chart](#aqua-security-server-helm-chart)
+  - [Contents](#contents)
+  - [Prerequisites](#prerequisites)
+    - [Container Registry Credentials](#container-registry-credentials)
+    - [PostgreSQL database](#postgresql-database)
+  - [Installing the Chart](#installing-the-chart)
+  - [Advanced Configuration](#advanced-configuration)
+  - [Configurable Variables](#configurable-variables)
+  - [Issues and feedback](#issues-and-feedback)
 
 ## Prerequisites
 
@@ -194,7 +196,7 @@ Parameter | Description | Default| Mandatory
 `db.persistence.size` |	Persistent Volume size | `30Gi`| `NO` 
 `db.persistence.storageClass` |	Persistent Volume Storage Class | `unset`| `NO` 
 `db.image.repository` | the docker image name to use | `database`| `NO` 
-`db.image.tag` | The image tag to use. | `5.3.21112`| `NO`
+`db.image.tag` | The image tag to use. | `5.3.21119`| `NO`
 `db.image.pullPolicy` | The kubernetes image pull policy. | `IfNotPresent`| `NO` 
 `db.service.type` | k8s service type | `ClusterIP`| `NO` 
 `db.resources` |	Resource requests and limits | `{}`| `NO` 

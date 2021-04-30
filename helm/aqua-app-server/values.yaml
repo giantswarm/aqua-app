@@ -69,7 +69,7 @@ db:
     privileged: false
   image:
     repository: giantswarm/aqua-database
-    tag: "5.3.21112"
+    tag: "5.3.21119"
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -124,7 +124,7 @@ gate:
   logLevel: "INFO"
   image:
     repository: giantswarm/aqua-gateway
-    tag: "5.3.21112"
+    tag: "5.3.21119"
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
@@ -199,7 +199,7 @@ web:
   logLevel: "INFO"
   image:
     repository: giantswarm/aqua-console
-    tag: "5.3.21112"
+    tag: "5.3.21119"
     pullPolicy: IfNotPresent
   service:
     type: LoadBalancer
