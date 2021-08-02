@@ -37,7 +37,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Update
 
-This chart now tracks the [Giantswarm Platform specific branch](https://github.com/aquasecurity/aqua-helm/tree/5.3_Giant_Swarm) of upstream.
+This chart now tracks the Giant Swarm platform specific branch of upstream.
 
 ### Fixes
 
