@@ -1,3 +1,7 @@
+# This repository is archived and does not receive any further updates
+
+
+
 [![CircleCI](https://circleci.com/gh/giantswarm/aqua-app.svg?style=shield)](https://circleci.com/gh/giantswarm/aqua-app)
 
 # aqua-app chart
